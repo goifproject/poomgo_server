@@ -7,7 +7,7 @@ module.exports = {
 }
 
 function createUser(req, res) {
-
+    // 유저 생성할 때 
 }
 
 function selectAllUsers(req, res) {

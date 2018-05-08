@@ -86,28 +86,28 @@ var user = [
 ]
 
 var auth = {
-    mentor = 0,
-    normal = 1
+    mentor : 0,
+    normal : 1
 }
 
 var region = {
-    seoul = 0,
-    busan = 1,
-    daegu = 2,
-    incheon = 3,
-    gwangju = 4,
-    daejeon = 5,
-    ulsan = 6,
-    sejong = 7,
-    gyeonggi = 8,
-    gangwon = 9,
-    choongbuk = 10,
-    choongnam = 11,
-    jeonbuk = 12,
-    jeonnam = 13,
-    gyeongbuk = 14,
-    gyeongnam = 15,
-    jeju = 16
+    seoul : 0,
+    busan : 1,
+    daegu : 2,
+    incheon : 3,
+    gwangju : 4,
+    daejeon : 5,
+    ulsan : 6,
+    sejong : 7,
+    gyeonggi : 8,
+    gangwon : 9,
+    choongbuk : 10,
+    choongnam : 11,
+    jeonbuk : 12,
+    jeonnam : 13,
+    gyeongbuk : 14,
+    gyeongnam : 15,
+    jeju : 16
 }
 
 var interest = [

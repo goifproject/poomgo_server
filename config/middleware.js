@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var routes = require('../routes/routes');
-
 var fs = require('fs');
 
 module.exports = function(app) {
