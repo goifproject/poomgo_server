@@ -6,7 +6,7 @@ let error = require('../../response/error');
 // study_id번 스터디에 공지 생성
 // router.post('/:study_id/notice', notice.create);
 function createNotice(req, res) {
-    logger.info('[2]controller-createNotice');
+    logger.debug('[2]controller-createNotice');
     let study_id = req.params.study_id;
     var postData;
     req.on('data', (data)=>{
@@ -16,7 +16,7 @@ function createNotice(req, res) {
         // reg_date 설정해 줘야 함
         dao.create(study_id, postData, (err, data)=>{
             if(err) return error.send(500, err, res);
-            result.send(200, "공지 생성이 완료되었습니다", data, res);
+            result.send(200, `${study_id}번 스터디에 공지 생성이 완료되었습니다`, data, res);
         });
     });
 }
@@ -24,18 +24,18 @@ function createNotice(req, res) {
 // study_id번 스터디 공지 전체 조회
 // router.get('/:study_id/notice', notice.selectAll);
 function selectAllNotices(req, res) {
-    logger.info('[2]controller-selectAllNotices');
+    logger.debug('[2]controller-selectAllNotices');
     let study_id = req.params.study_id;
     dao.selectAll(study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
-        result.send(200, "공지 전체 조회가 완료되었습니다", data, res);
+        result.send(200, `${study_id}번 스터디 공지 전체 조회가 완료되었습니다`, data, res);
     });
 }
 
 // study_id번 스터디 notice_id 공지 조회
 // router.get('/:study_id/notice/:notice_id', notice.selectSingle);
 function selectSingleNotice(req, res) {
-    logger.info('[2]controller-selectSingleNotice');
+    logger.debug('[2]controller-selectSingleNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
     dao.select(study_id, notice_id, (err, data)=>{
@@ -47,6 +47,7 @@ function selectSingleNotice(req, res) {
 // study_id번 스터디 notice_id 공지 업데이트
 // router.put('/:study_id/notice/:notice_id', notice.update);
 function updateNotice(req, res) {
+    logger.debug('[2]controller-updateNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
     var postData = '';
@@ -65,8 +66,10 @@ function updateNotice(req, res) {
 // study_id번 스터디 notice_id 공지 삭제
 // router.delete('/:study_id/:notice/:notice_id', notice.delete);
 function deleteNotice(req, res) {
+    logger.debug('[2]controller-deleteNotice');
     let study_id = req.params.study_id;
-    dao.deleteNotice(study_id, (err, data)=>{
+    let notice_id = req.params.notice_id;
+    dao.deleteNotice(study_id, notice_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${notice_id}공지 삭제가 완료되었습니다`, data, res);
     });
