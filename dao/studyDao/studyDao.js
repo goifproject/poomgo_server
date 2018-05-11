@@ -19,6 +19,7 @@ const study_id = "study_id",
       thumbnail = "thumbnail";
 
 function create(dataObj, callback) {
+    logger.debug('[3]studyDao-create');
     let values = [dataObj.director_id, 
                     dataObj.name, 
                     dataObj.reg_date, 
@@ -49,19 +50,19 @@ function create(dataObj, callback) {
 }
 
 function selectAll(callback) {
-    logger.info('[3]dao-study');
+    logger.debug('[3]studyDao-selectAll');
     let query = `SELECT * FROM ${tablename}`;
     database.executeByRaw(query, callback);
 }
 
-function select(param, callback) {
-    let studyId = param;
-    let query = `SELECt * FROM ${tablename} WHERE ${study_id}=${studyId}`;
+function select(param_study_id, callback) {
+    logger.debug('[3]studyDao-select');
+    let query = `SELECt * FROM ${tablename} WHERE ${study_id}=${param_study_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param, callback) {
-    let studyId = param;
+function update(param_study_id, callback) {
+    logger.debug('[3]studyDao-update');
     let values = [dataObj.name, 
                     dataObj.start_date, 
                     dataObj.duration, 
@@ -84,13 +85,13 @@ function update(param, callback) {
                         ${study_status}, 
                         ${thumbnail}) 
                 VALUES (?,?,?,?,?,?,?,?,?,?)
-                WHERE ${study_id}=${studyId}`;
+                WHERE ${study_id}=${param_study_id}`;
     database.executeByValues(query, values, callback);
 }
 
-function deleteStudy(param, callback) {
-    let studyId = param;
-    let query = `DELETE FROM ${tablename} WHERE ${study_id}=${studyId}`;
+function deleteStudy(param_study_id, callback) {
+    logger.debug('[3]studyDao-deleteStudy');
+    let query = `DELETE FROM ${tablename} WHERE ${study_id}=${param_study_id}`;
     database.executeByRaw(query, values, callback);
 }
 
