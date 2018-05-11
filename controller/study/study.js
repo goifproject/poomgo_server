@@ -24,6 +24,7 @@ function createStudy(req, res) {
 function selectAllStudies(req, res) {
     logger.info('[2]controller-study')
     dao.selectAll((err, data)=>{
+        // TODO study_time 추가해줘야 함
         if(err) return error.send(500, err, res);
         result.send(200, "스터디 전체 조회가 완료되었습니다", data, res);
     });
@@ -34,6 +35,7 @@ function selectAllStudies(req, res) {
 function selectSingleStudy(req, res) {
     let study_id = req.params.study_id;
     dao.select(study_id, (err, data)=>{
+        // TODO study_time 추가해줘야 함
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 조회가 완료되었습니다`, data, res);
     });

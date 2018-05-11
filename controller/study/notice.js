@@ -38,7 +38,7 @@ function selectSingleNotice(req, res) {
     logger.debug('[2]controller-selectSingleNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
-    dao.select(study_id, notice_id, (err, data)=>{
+    dao.select(notice_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${notice_id}공지 조회가 완료되었습니다`, data, res);
     });
@@ -56,7 +56,7 @@ function updateNotice(req, res) {
     });
     req.on('end', ()=>{
         // update_date 설정해 줘야 함
-        dao.update(study_id, notice_id, (err, data)=>{
+        dao.update(notice_id, (err, data)=>{
             if(err) return error.send(500, err, res);
             result.send(200, `${study_id}번 스터디 ${notice_id}공지 업데이트가 완료되었습니다`, data, res);
         });
@@ -69,7 +69,7 @@ function deleteNotice(req, res) {
     logger.debug('[2]controller-deleteNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
-    dao.deleteNotice(study_id, notice_id, (err, data)=>{
+    dao.deleteNotice(notice_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${notice_id}공지 삭제가 완료되었습니다`, data, res);
     });

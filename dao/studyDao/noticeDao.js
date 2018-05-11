@@ -27,26 +27,26 @@ function selectAll(param_study_id, callback) {
     database.executeByRaw(query, callback);
 }
 
-function select(param_study_id, param_id, callback) {
+function select(param_id, callback) {
     logger.debug('[3]noticeDao-select');
-    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_id} AND ${study_id}=${param_study_id}`;
+    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param_study_id, param_id, callback) {
+function update(param_id, callback) {
     logger.debug('[3]noticeDao-update');
     let values = [dataObj.notice, 
                     dataObj.update_date]; 
-    let query = `UPDATE ${notice} (
-                        ${update_date}) 
-                VALUES (?,?)
-                WHERE ${id}=${param_id} AND ${study_id}=${param_study_id}`;
+    let query = `UPDATE ${tablename} SET
+                        ${notice} = ?,
+                        ${update_date} = ?
+                WHERE ${id}=${param_id}`;
     database.executeByValues(query, values, callback);
 }
 
-function deleteNotice(param_study_id, param_id, callback) {
+function deleteNotice(param_id, callback) {
     logger.debug('[3]noticeDao-deleteNotice');
-    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_id} AND ${study_id}=${param_study_id}}`;
+    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_id}`;
     database.executeByRaw(query, values, callback);
 }
 

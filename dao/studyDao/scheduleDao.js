@@ -26,26 +26,24 @@ function selectAll(param_study_id, callback) {
     database.executeByRaw(query, callback);
 }
 
-function select(param_study_id, param_id, callback) {
+function select(param_id, callback) {
     logger.debug('[3]scheduleDao-select');
-    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_id} AND ${study_id}=${param_study_id}`;
+    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param_study_id, param_id, callback) {
+function update(param_id, callback) {
     logger.debug('[3]scheduleDao-update');
     let values = [dataObj.schedule_time, 
                     dataObj.content]; 
-    let query = `UPDATE ${schedule_time} (
-                        ${content}) 
-                VALUES (?,?)
-                WHERE ${id}=${param_id} AND ${study_id}=${param_study_id}`;
+    let query = `UPDATE ${tablename} SET ${schedule_time} = ?, ${content} = ?
+                WHERE ${id}=${param_id}`;
     database.executeByValues(query, values, callback);
 }
 
-function deleteSchedule(param_study_id, param_id, callback) {
+function deleteSchedule(param_id, callback) {
     logger.debug('[3]scheduleDao-deleteSchedule');
-    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_id} AND ${study_id}=${param_study_id}}`;
+    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_id}`;
     database.executeByRaw(query, values, callback);
 }
 

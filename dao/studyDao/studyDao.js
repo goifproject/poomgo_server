@@ -73,18 +73,17 @@ function update(param_study_id, callback) {
                     dataObj.limit, 
                     dataObj.study_status, 
                     dataObj.thumbnail]; 
-    let query = `UPDATE ${tablename} (
-                        ${name}, 
-                        ${start_date}, 
-                        ${duration}, 
-                        ${end_date}, 
-                        ${region}, 
-                        ${category}, 
-                        ${description}, 
-                        ${limit}, 
-                        ${study_status}, 
-                        ${thumbnail}) 
-                VALUES (?,?,?,?,?,?,?,?,?,?)
+    let query = `UPDATE ${tablename} SET
+                        ${name} = ?, 
+                        ${start_date} = ?, 
+                        ${duration} = ?, 
+                        ${end_date} = ?, 
+                        ${region} = ?, 
+                        ${category} = ?, 
+                        ${description} = ?, 
+                        ${limit} = ?, 
+                        ${study_status} = ?, 
+                        ${thumbnail} = ?
                 WHERE ${study_id}=${param_study_id}`;
     database.executeByValues(query, values, callback);
 }

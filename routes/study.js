@@ -29,7 +29,8 @@ router.put('/:study_id/schedule/:schedule_id', schedule.update);
 router.delete('/:study_id/schedule/:schedule_id', schedule.delete);
 
 // study - attendacne information
-router.post('/:study_id/attendance', attendance.check);
+router.get('/:study_id/attendance/:schedule_id', attendance.check);
+router.post('/:study_id/attendance/:attendance_id', attendance.check);
 
 // study - member candidate information
 router.post('/:study_id/candidate', candidate.add);
