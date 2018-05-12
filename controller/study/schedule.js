@@ -1,5 +1,5 @@
 let dao = require('../../dao/studyDao/scheduleDao');
-let attendaceDao = require('../../dao/studyDao/scheduleDao');
+let attendaceDao = require('../../dao/studyDao/attendanceDao');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');
@@ -12,8 +12,11 @@ function createSchedule(req, res) {
     var dataObj = req.body;
     // TODO 클라이언트와 datetime만 협의하면 됨
     dao.create(study_id, dataObj, (err, data)=>{
-        if(err) return error.send(500, err, res);
-        result.send(200, `${study_id}번 스터디에 스케줄 생성이 완료되었습니다`, {}, res);
+        // 스케줄이 만들어 지는 것과 동시에 자동으로 출석부가 생성된다
+        attendaceDao.create(study_id, data.insertId, (err, data)=>{
+            if(err) return error.send(500, err, res);
+            result.send(200, `${study_id}번 스터디에 ${data.insertId}번 스케줄 생성이 완료되었습니다`, {}, res);
+        });
     });
 }
 
