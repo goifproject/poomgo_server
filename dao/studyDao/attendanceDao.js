@@ -18,10 +18,10 @@ function create(param_study_id, dataObj, callback) {
     logger.debug('[3]attendanceDao-create');
 }
 
-function select(param_id, callback) {
+function select(param_schedule_id, callback) {
     logger.debug('[3]attendanceDao-select');
     // TODO 권한에 따라 쿼리하는 내용이 달라짐
-    let query = `SELECt * FROM ${tablename} WHERE ${schedule_id}=${param_id}`;
+    let query = `SELECt * FROM ${tablename} WHERE ${schedule_id}=${param_schedule_id}`;
     // 토큰을 통해 사용자 구분값인 아이디를 받아와야 함
 
     // 내거만 보내주는 경우
@@ -32,13 +32,13 @@ function select(param_id, callback) {
 }
 
 // 명시적으로 '출석체크'를 누를 경우
-function update(param_id, callback) {
+function update(param_attendance_id, callback) {
     logger.debug('[3]attendanceDao-update');
     // TODO 원래는 토큰을 통해서 아이디를 받아와야 함
     let values = [dataObj.attendance_type]; 
     let query = `UPDATE ${tablename} SET
                         ${attendance_type} = ? 
-                WHERE ${id}=${param_id}`;
+                WHERE ${id}=${param_attendance_id}`;
     database.executeByValues(query, values, callback);
 }
 
