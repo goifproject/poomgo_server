@@ -40,5 +40,7 @@ router.delete('/:study_id/candidate/:candidate_id', candidate.delete);
 
 // study - member list
 router.get('/:study_id/members', member.select);
+router.delete('/:study_id/members/:member_id', member.delete);
+
 
 module.exports = router;

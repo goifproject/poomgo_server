@@ -44,7 +44,7 @@ function updateCandidateStatus(req, res) {
         // update_date 설정해 줘야 함
         dao.update(candidate_id, (err, data)=>{
             if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디 ${candidate_id} 상태 업데이트가 완료되었습니다`, data, res);
+            result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다`, data, res);
         });
     });
 }
@@ -53,10 +53,10 @@ function updateCandidateStatus(req, res) {
 function deleteCandidate(req, res) {
     logger.debug('[2]controller-deleteCandidate');
     let study_id = req.params.study_id;
-    let notice_id = req.params.notice_id;
-    dao.deleteNotice(notice_id, (err, data)=>{
+    let candidate_id = req.params.candidate_id;
+    dao.deleteCandidate(candidate_id, (err, data)=>{
         if(err) return error.send(500, err, res);
-        result.send(200, `${study_id}번 스터디 ${notice_id}공지 삭제가 완료되었습니다`, data, res);
+        result.send(200, `${study_id}번 스터디 ${candidate_id}후보 삭제가 완료되었습니다`, data, res);
     });
 }
 
