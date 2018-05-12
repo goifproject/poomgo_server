@@ -8,16 +8,10 @@ let error = require('../../response/error');
 function addCandidate(req, res) {
     logger.debug('[2]controller-addCandidate');
     let study_id = req.params.study_id;
-    var postData;
-    req.on('data', (data)=>{
-        postData += data;
-    });
-    req.on('end', ()=>{
-        // reg_date 설정해 줘야 함
-        dao.create(study_id, postData, (err, data)=>{
-            if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디에 후보 생성이 완료되었습니다`, data, res);
-        });
+    var dataObj = req.body;
+    dao.create(study_id, dataObj, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디에 후보 생성이 완료되었습니다`, {}, res);
     });
 }
 
@@ -36,16 +30,11 @@ function updateCandidateStatus(req, res) {
     logger.debug('[2]controller-updateCandidateStatus');
     let study_id = req.params.study_id;
     let candidate_id = req.params.candidate_id;
-    var postData = '';
-    req.on('data', (data)=>{
-        postData += data;
-    });
-    req.on('end', ()=>{
-        // update_date 설정해 줘야 함
-        dao.update(candidate_id, (err, data)=>{
-            if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다`, data, res);
-        });
+    var dataObj = req.body;
+    dataObj.update_date = new Date();
+    dao.update(candidate_id, dataObj, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다`, {}, res);
     });
 }
 

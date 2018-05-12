@@ -26,13 +26,11 @@ function selectAll(param_study_id, callback) {
     database.executeByRaw(query, callback);
 }
 
-function update(param_candidate_id, callback) {
+function update(param_candidate_id, dataObj, callback) {
     // TODO 상태 바꿔주면서 실제 member에도 추가해 줘야 함
     logger.debug('[3]candidateDao-update');
     let values = [dataObj.status]; 
-    let query = `UPDATE ${tablename} SET
-                        ${status} = ?
-                WHERE ${id}=${param_candidate_id}`;
+    let query = `UPDATE ${tablename} SET ${status}=? WHERE ${candidate_id}=${param_candidate_id}`;
     database.executeByValues(query, values, callback);
 }
 
