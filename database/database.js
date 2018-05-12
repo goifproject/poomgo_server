@@ -16,7 +16,7 @@ function executeByRaw(query, callback) {
 }
 
 function executeByValues(query, values, callback) {
-    logger.error('[4]database-executeByValues');
+    logger.debug('[4]database-executeByValues');
     pool.query(query, values, (err, results, fields)=>{
         setResult(err, results, callback);
     });

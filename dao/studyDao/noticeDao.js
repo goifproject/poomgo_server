@@ -33,7 +33,7 @@ function select(param_notice_id, callback) {
     database.executeByRaw(query, callback);
 }
 
-function update(param_notice_id, callback) {
+function update(param_notice_id, dataObj, callback) {
     logger.debug('[3]noticeDao-update');
     let values = [dataObj.notice, 
                     dataObj.update_date]; 
@@ -44,7 +44,7 @@ function update(param_notice_id, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function deleteNotice(paraparam_notice_idm_id, callback) {
+function deleteNotice(param_notice_id, callback) {
     logger.debug('[3]noticeDao-deleteNotice');
     let query = `DELETE FROM ${tablename} WHERE ${id}=${param_notice_id}`;
     database.executeByRaw(query, callback);

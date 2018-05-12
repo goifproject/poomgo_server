@@ -9,9 +9,9 @@ function createStudy(req, res) {
     logger.debug('[2]controller-createStudy');
 
     var dataObjc = req.body;
-    dataObjc.reg_date = new Date();
+    dataObj.reg_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
-    dataObjc.start_date = new Date();
+    dataObj.start_date = new Date();
     dao.create(req.body, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, "스터디 생성이 완료되었습니다", {}, res);
@@ -46,16 +46,12 @@ function selectSingleStudy(req, res) {
 function updateStudy(req, res) {
     logger.debug('[2]controller-updateStudy');
     let study_id = req.params.study_id;
-    var postData = '';
-    req.on('data', (data)=>{
-        postData += data;
-    });
-    req.on('end', ()=>{
-        // update_date 설정해 줘야 함
-        dao.update(study_id, (err, data)=>{
-            if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디 업데이트가 완료되었습니다`, {}, res);
-        });
+    var dataObj = req.body;
+    dataObj.update_date = new Date();
+    // TODO Datetime 클라이언트랑 협의 필요함
+    dao.update(study_id, dataObj, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디 업데이트가 완료되었습니다`, {}, res);
     });
 }
 

@@ -64,7 +64,7 @@ function select(param_study_id, callback) {
     database.executeByRaw(query, callback);
 }
 
-function update(param_study_id, callback) {
+function update(param_study_id, dataObj, callback) {
     logger.debug('[3]studyDao-update');
     let values = [dataObj.name, 
                     dataObj.start_date, 

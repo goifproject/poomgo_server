@@ -8,16 +8,13 @@ let error = require('../../response/error');
 function createNotice(req, res) {
     logger.debug('[2]controller-createNotice');
     let study_id = req.params.study_id;
-    var postData;
-    req.on('data', (data)=>{
-        postData += data;
-    });
-    req.on('end', ()=>{
-        // reg_date 설정해 줘야 함
-        dao.create(study_id, postData, (err, data)=>{
-            if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디에 공지 생성이 완료되었습니다`, data, res);
-        });
+    var dataObj = req.body;
+    dataObj.reg_date = new Date();
+    // TODO Datetime 클라이언트랑 협의 필요함
+    dataObj.start_date = new Date();
+    dao.create(study_id, req.body, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디에 공지 생성이 완료되었습니다`, {}, res);
     });
 }
 
@@ -50,16 +47,12 @@ function updateNotice(req, res) {
     logger.debug('[2]controller-updateNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
-    var postData = '';
-    req.on('data', (data)=>{
-        postData += data;
-    });
-    req.on('end', ()=>{
-        // update_date 설정해 줘야 함
-        dao.update(notice_id, (err, data)=>{
-            if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디 ${notice_id}공지 업데이트가 완료되었습니다`, data, res);
-        });
+    var dataObj = req.body;
+    dataObj.update_date = new Date();
+    // TODO Datetime 클라이언트랑 협의 필요함
+    dao.update(notice_id, dataObj, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디 ${notice_id} 공지 업데이트가 완료되었습니다`, {}, res);
     });
 }
 
@@ -71,7 +64,7 @@ function deleteNotice(req, res) {
     let notice_id = req.params.notice_id;
     dao.deleteNotice(notice_id, (err, data)=>{
         if(err) return error.send(500, err, res);
-        result.send(200, `${study_id}번 스터디 ${notice_id}공지 삭제가 완료되었습니다`, data, res);
+        result.send(200, `${study_id}번 스터디 ${notice_id}공지 삭제가 완료되었습니다`, {}, res);
     });
 }
 
