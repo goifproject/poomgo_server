@@ -9,15 +9,11 @@ let error = require('../../response/error');
 function createSchedule(req, res) {
     logger.debug('[2]controller-createSchedule');
     let study_id = req.params.study_id;
-    var postData;
-    req.on('data', (data)=>{
-        postData += data;
-    });
-    req.on('end', ()=>{
-        dao.create(study_id, postData, (err, data)=>{
-            if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디에 스케줄 생성이 완료되었습니다`, data, res);
-        });
+    var dataObj = req.body;
+    // TODO 클라이언트와 datetime만 협의하면 됨
+    dao.create(study_id, dataObj, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디에 스케줄 생성이 완료되었습니다`, {}, res);
     });
 }
 
@@ -54,15 +50,10 @@ function updateSchedule(req, res) {
     logger.debug('[2]controller-updateSchedule');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
-    var postData = '';
-    req.on('data', (data)=>{
-        postData += data;
-    });
-    req.on('end', ()=>{
-        dao.update(schedule_id, (err, data)=>{
-            if(err) return error.send(500, err, res);
-            result.send(200, `${study_id}번 스터디 ${schedule_id}스케줄 업데이트가 완료되었습니다`, data, res);
-        });
+    let dataObj = req.body;
+    dao.update(schedule_id, dataObj, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디 ${schedule_id}스케줄 업데이트가 완료되었습니다`, {}, res);
     });
 }
 

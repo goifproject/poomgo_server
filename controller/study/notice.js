@@ -12,7 +12,7 @@ function createNotice(req, res) {
     dataObj.reg_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
     dataObj.start_date = new Date();
-    dao.create(study_id, req.body, (err, data)=>{
+    dao.create(study_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디에 공지 생성이 완료되었습니다`, {}, res);
     });

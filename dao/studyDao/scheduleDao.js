@@ -32,7 +32,7 @@ function select(param_schedule_id, callback) {
     database.executeByRaw(query, callback);
 }
 
-function update(param_schedule_id, callback) {
+function update(param_schedule_id, dataObj, callback) {
     logger.debug('[3]scheduleDao-update');
     let values = [dataObj.schedule_time, 
                     dataObj.content]; 

@@ -8,11 +8,11 @@ let error = require('../../response/error');
 function createStudy(req, res) {
     logger.debug('[2]controller-createStudy');
 
-    var dataObjc = req.body;
+    var dataObj = req.body;
     dataObj.reg_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
     dataObj.start_date = new Date();
-    dao.create(req.body, (err, data)=>{
+    dao.create(dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, "스터디 생성이 완료되었습니다", {}, res);
     });
