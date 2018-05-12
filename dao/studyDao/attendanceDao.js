@@ -15,7 +15,7 @@ const id = "id",
 // 가만히 생각해보니 아무것도 안 한 사람은 출석 데이터가 없다. 그들은 '결석' 이어야 하기 때문에 역시 서버에서 시간이 되면 자동으로 만들어주거나
 // 스터디를 만들 때 미리 모든 스케줄에 대해 각 회원별 출석 여부 데이터를 넣어둔다.
 function create(param_study_id, dataObj, callback) {
-    logger.debug('[3]scheduleDao-create');
+    logger.debug('[3]attendanceDao-create');
 }
 
 function select(param_id, callback) {
@@ -33,7 +33,7 @@ function select(param_id, callback) {
 
 // 명시적으로 '출석체크'를 누를 경우
 function update(param_id, callback) {
-    logger.debug('[3]scheduleDao-update');
+    logger.debug('[3]attendanceDao-update');
     // TODO 원래는 토큰을 통해서 아이디를 받아와야 함
     let values = [dataObj.attendance_type]; 
     let query = `UPDATE ${tablename} SET
