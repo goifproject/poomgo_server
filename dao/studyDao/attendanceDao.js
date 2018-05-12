@@ -39,7 +39,7 @@ function update(param_attendance_id, callback) {
     let query = `UPDATE ${tablename} SET
                         ${attendance_type} = ? 
                 WHERE ${id}=${param_attendance_id}`;
-    database.executeByValues(query, values, callback);
+    database.executeByValues(query, callback);
 }
 
 

@@ -37,7 +37,7 @@ function update(param_member_id, callback) {
 function deleteMember(param_member_id, callback) {
     logger.debug('[3]memberDao-deleteMember');
     let query = `DELETE FROM ${tablename} WHERE ${id}=${param_member_id}`;
-    database.executeByRaw(query, values, callback);
+    database.executeByRaw(query, callback);
 }
 
 module.exports = {

@@ -39,7 +39,7 @@ function update(param_candidate_id, callback) {
 function deleteCandidate(param_candidate_id, callback) {
     logger.debug('[3]candidateDao-deleteCandidate');
     let query = `DELETE FROM ${tablename} WHERE ${id}=${param_candidate_id}`;
-    database.executeByRaw(query, values, callback);
+    database.executeByRaw(query, callback);
 }
 
 module.exports = {

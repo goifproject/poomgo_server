@@ -14,5 +14,5 @@ exports.send = function(code, msg, rows, res) {
     result.result.msg = msg;
     result.data = rows;
     res.send(JSON.stringify(result));     
-    logger.info(`[6] COMPLETE`)
+    logger.debug(`[5] COMPLETE`)
 }

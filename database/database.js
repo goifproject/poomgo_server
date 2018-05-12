@@ -9,12 +9,14 @@ function connect(done) {
 }
 
 function executeByRaw(query, callback) {
+    logger.debug('[4]database-executeByRaw');
     pool.query(query, (err, results, fields)=>{
         setResult(err, results, callback);
     });
 }
 
 function executeByValues(query, values, callback) {
+    logger.error('[4]database-executeByValues');
     pool.query(query, values, (err, results, fields)=>{
         setResult(err, results, callback);
     });

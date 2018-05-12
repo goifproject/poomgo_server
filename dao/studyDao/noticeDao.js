@@ -47,7 +47,7 @@ function update(param_notice_id, callback) {
 function deleteNotice(paraparam_notice_idm_id, callback) {
     logger.debug('[3]noticeDao-deleteNotice');
     let query = `DELETE FROM ${tablename} WHERE ${id}=${param_notice_id}`;
-    database.executeByRaw(query, values, callback);
+    database.executeByRaw(query, callback);
 }
 
 module.exports = {

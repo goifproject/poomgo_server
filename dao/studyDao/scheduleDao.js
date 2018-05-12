@@ -44,7 +44,7 @@ function update(param_schedule_id, callback) {
 function deleteSchedule(param_schedule_id, callback) {
     logger.debug('[3]scheduleDao-deleteSchedule');
     let query = `DELETE FROM ${tablename} WHERE ${id}=${param_schedule_id}`;
-    database.executeByRaw(query, values, callback);
+    database.executeByRaw(query, callback);
 }
 
 module.exports = {
