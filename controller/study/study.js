@@ -7,7 +7,6 @@ let error = require('../../response/error');
 // router.post('/:study_id', study.create);
 function createStudy(req, res) {
     logger.debug('[2]controller-createStudy');
-
     var dataObj = req.body;
     dataObj.reg_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
