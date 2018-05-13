@@ -1,4 +1,3 @@
-
 let database = require('../../database/database');
 let tablename = 'exposure'
 let logger = require('../../util/logger');
@@ -37,7 +36,7 @@ function create(param_user_id, callback) {
 
 function select(param_user_id, callback) {
     logger.debug('[3]exposureDao-select');
-    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_user_id}`;
+    let query = `SELECt * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
     database.executeByRaw(query, callback);
 }
 
@@ -64,7 +63,7 @@ function update(param_user_id, dataObj, callback) {
                             ${thumbnail}=?,
                             ${career}=?,
                             ${interest}=?  
-                WHERE ${id}=${param_user_id}`;
+                WHERE ${user_id}=${param_user_id}`;
     logger.deleteUser(query);
     database.executeByValues(query, values, callback);
 }

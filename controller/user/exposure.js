@@ -27,7 +27,7 @@ function updateExposureStatus(req, res) {
     var dataObj = req.body;
     dao.update(user_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
-        result.send(200, `${userInfo} 회원 정보 업데이트가 완료되었습니다`, {}, res);
+        result.send(200, `${user_id} 회원 정보 업데이트가 완료되었습니다`, {}, res);
     });
 }
 
