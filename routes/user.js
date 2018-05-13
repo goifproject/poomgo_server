@@ -1,7 +1,7 @@
 let express = require('express');
 let router = express.Router();
 let user = require('../controller/user/user');
-let exposure_status = require('../controller/user/exposure_status');
+let exposure = require('../controller/user/exposure');
 let interest = require('../controller/user/interest');
 let blacklist = require('../controller/user/blacklist');
 let mystudy = require('../controller/user/mystudy');
@@ -15,8 +15,8 @@ router.put('/:user_id', user.update);
 router.delete('/:user_id', user.delete);
 
 // user - information expousre status
-router.get('/:user_id/exposure', exposure_status.read);
-router.put('/:user_id/exposure', exposure_status.update);
+router.get('/:user_id/exposure', exposure.read);
+router.put('/:user_id/exposure', exposure.update);
 
 // user - interest fields
 router.get('/:user_id/interest', interest.select);

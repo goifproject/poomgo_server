@@ -1,4 +1,5 @@
 let dao = require('../../dao/userDao/userDao');
+let exposure = require('../../controller/user/exposure');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');
@@ -12,8 +13,11 @@ function createUser(req, res) {
     // TODO Datetime 클라이언트랑 협의 필요함
     dataObj.reg_date = new Date();
     dao.create(dataObj, (err, data)=>{
-        if(err) return error.send(500, err, res);
-        result.send(200, "회원가입이 완료되었습니다", {}, res);
+        // 회원가입 하면서 exposure_status 생성해 줘야 함
+        exposure.createExposureStatus(dataObj.id, (err, data)=>{
+            if(err) return error.send(500, err, res);
+            result.send(200, "회원가입이 완료되었습니다", {}, res);
+        });
     });
 }
 
