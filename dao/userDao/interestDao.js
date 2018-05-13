@@ -1,4 +1,3 @@
-
 let database = require('../../database/database');
 let tablename = 'interest'
 let logger = require('../../util/logger');
@@ -53,7 +52,7 @@ function update(param_user_id, dataObj, callback) {
                             ${language}=?,
                             ${certificate}=?   
                 WHERE ${user_id}=${param_user_id}`;
-    logger.deleteUser(query);
+    logger.debug(query);
     database.executeByValues(query, values, callback);
 }
 
