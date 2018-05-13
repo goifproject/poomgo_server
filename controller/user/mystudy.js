@@ -20,7 +20,7 @@ function readMyStudy(req, res) {
     let user_id = req.params.user_id;
     dao.select(user_id, (err, data)=>{
         if(err) return error.send(500, err, res);
-        result.send(200, `${user_id}회원 ${study_id} 내 스터디 조회가 완료되었습니다`, data, res);
+        result.send(200, `${user_id}회원 내 스터디 조회가 완료되었습니다`, data, res);
     });
 }
 

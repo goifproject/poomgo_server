@@ -36,7 +36,7 @@ router.delete('/:user_id/mystudy/:study_id', mystudy.delete);
 // user - review information
 router.post('/:user_id/review', review.create);
 router.get('/:user_id/review', review.read);
-router.put('/:user_id/review', review.update);
-router.delete('/:user_id/review', review.delete);
+router.put('/:user_id/review/:writer_id', review.update);
+router.delete('/:user_id/review/:writer_id', review.delete);
 
 module.exports = router;
