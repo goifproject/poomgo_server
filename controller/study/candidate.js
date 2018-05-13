@@ -1,4 +1,5 @@
 let dao = require('../../dao/studyDao/candidateDao');
+let memberDao = require('../../dao/studyDao/memberDao');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');
@@ -33,8 +34,17 @@ function updateCandidateStatus(req, res) {
     var dataObj = req.body;
     dataObj.update_date = new Date();
     dao.update(candidate_id, dataObj, (err, data)=>{
-        if(err) return error.send(500, err, res);
-        result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다`, {}, res);
+        // 후보 상태가 수락 바뀔 경우 memeber 생성
+        if(dataObj.status == 2) {
+            memberDao.create(candidate_id, study_id, (err, data)=>{
+                if(err) return error.send(500, err, res);
+                return result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다 | ${candidate_id} 멤버가 생성되었습니다`, {}, res);
+            });
+        } else {
+            if(err) return error.send(500, err, res);
+            return result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다`, {}, res);
+        }
+        
     });
 }
 

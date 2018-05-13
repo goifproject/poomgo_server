@@ -10,7 +10,8 @@ function create(param_study_id, param_member_id, callback) {
     // TODO dataObj로 바꿔주자
     let values = [param_study_id,
                     param_member_id];
-    let query = `INSERT INTO ${tablename} (
+    // 중복으로 생성되지 않게 해주자
+    let query = `INSERT IGNORE INTO ${tablename} (
                         ${member_id},
                         ${study_id}) 
                 VALUES (?,?)`;
@@ -36,7 +37,8 @@ function update(param_member_id, callback) {
 
 function deleteMember(param_member_id, callback) {
     logger.debug('[3]memberDao-deleteMember');
-    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_member_id}`;
+    let query = `DELETE FROM ${tablename} WHERE ${member_id}=${param_member_id}`;
+    logger.debug(query);
     database.executeByRaw(query, callback);
 }
 
