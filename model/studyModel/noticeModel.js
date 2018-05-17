@@ -8,8 +8,8 @@ const id = "id",
       update_date = "update_date",
       study_id = "study_id";
 
-function create(param_study_id, dataObj, callback) {
-    logger.debug('[3]noticeDao-create');
+function makeNewNotice(param_study_id, dataObj, callback) {
+    logger.debug('[3]noticeModel-makeNewNotice');
     let values = [dataObj.notice, 
                     dataObj.reg_date, 
                     param_study_id];
@@ -21,20 +21,20 @@ function create(param_study_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function selectAll(param_study_id, callback) {
-    logger.debug('[3]noticeDao-selectAll');
-    let query = `SELECT * FROM ${tablename} WHERE ${study_id} = ${param_study_id}`;
-    database.executeByRaw(query, callback);
-}
-
-function select(param_notice_id, callback) {
-    logger.debug('[3]noticeDao-select');
+function getNoticeInfo(param_notice_id, callback) {
+    logger.debug('[3]noticeModel-getNoticeInfo');
     let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_notice_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param_notice_id, dataObj, callback) {
-    logger.debug('[3]noticeDao-update');
+function getNoticeInfoList(param_study_id, callback) {
+    logger.debug('[3]noticeModel-getNoticeInfoList');
+    let query = `SELECT * FROM ${tablename} WHERE ${study_id} = ${param_study_id}`;
+    database.executeByRaw(query, callback);
+}
+
+function changeNoticeInfo(param_notice_id, dataObj, callback) {
+    logger.debug('[3]noticeModel-changeNoticeInfo');
     let values = [dataObj.notice, 
                     dataObj.update_date]; 
     let query = `UPDATE ${tablename} SET
@@ -44,16 +44,16 @@ function update(param_notice_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function deleteNotice(param_notice_id, callback) {
-    logger.debug('[3]noticeDao-deleteNotice');
+function removeNotice(param_notice_id, callback) {
+    logger.debug('[3]noticeModel-removeNotice');
     let query = `DELETE FROM ${tablename} WHERE ${id}=${param_notice_id}`;
     database.executeByRaw(query, callback);
 }
 
 module.exports = {
-    create : create,
-    selectAll : selectAll,
-    select : select,
-    update : update,
-    deleteNotice : deleteNotice
+    makeNewNotice : makeNewNotice,
+    getNoticeInfo : getNoticeInfo,
+    getNoticeInfoList : getNoticeInfoList,
+    updachangeNoticeInfoe : changeNoticeInfo,
+    removeNotice : removeNotice
 }

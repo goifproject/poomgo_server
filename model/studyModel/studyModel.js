@@ -1,7 +1,7 @@
 let database = require('../../database/database');
 let tablename = 'study'
 let logger = require('../../util/logger');
-const study_id = "id",
+const id = "id",
       director_id = "director_id",
       name = "name",
       reg_date = "reg_date",
@@ -17,7 +17,7 @@ const study_id = "id",
       thumbnail = "thumbnail";
 
 function createNewStudy(dataObj, callback) {
-    logger.debug('[3]studyDao-create');
+    logger.debug('[3]studyModel-createNewStudy');
     // study_time도 꺼내와야 함
     let values = [dataObj.director_id, 
                     dataObj.name, 
@@ -31,40 +31,40 @@ function createNewStudy(dataObj, callback) {
                     dataObj.status, 
                     dataObj.number,
                     dataObj.thumbnail]; 
-    let query = `INSERT INTO ${tablename} (
-                        ${director_id}, 
-                        ${name}, 
-                        ${reg_date}, 
-                        ${start_date}, 
-                        ${duration}, 
-                        ${region}, 
-                        ${category}, 
-                        ${description}, 
-                        ${limit}, 
-                        ${number},
-                        ${status}, 
-                        ${thumbnail}) 
-                VALUES (?,?,?,?, ?,?,?,?, ?,?,?,?)`;
+    let query = `INSERT INTO 
+                ${tablename} (
+                    ${director_id}, 
+                    ${name}, 
+                    ${reg_date}, 
+                    ${start_date}, 
+                    ${duration}, 
+                    ${region}, 
+                    ${category}, 
+                    ${description}, 
+                    ${limit}, 
+                    ${number},
+                    ${status}, 
+                    ${thumbnail}) 
+                VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?)`;
     logger.debug(`[3]query-${query}`);
     database.executeByValues(query, values, callback);
 }
 
-function getStudyInfoList(callback) {
-    logger.debug('[3]studyDao-selectAll');
-    let query = `SELECT * FROM ${tablename}`;
+function getStudyInfo(param_study_id, callback) {
+    logger.debug('[3]studyModel-getStudyInfo');
+    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_study_id}`;
     logger.debug(`[3]query-${query}`);
     database.executeByRaw(query, callback);
 }
 
-function getStudyInfo(param_study_id, callback) {
-    logger.debug('[3]studyDao-select');
-    let query = `SELECt * FROM ${tablename} WHERE ${study_id}=${param_study_id}`;
-    logger.debug(`[3]query-${query}`);
+function getStudyInfoList(callback) {
+    logger.debug('[3]studyModel-getStudyInfoList');
+    let query = `SELECT * FROM ${tablename}`;
     database.executeByRaw(query, callback);
 }
 
 function changeStudyInfo(param_study_id, dataObj, callback) {
-    logger.debug('[3]studyDao-update');
+    logger.debug('[3]studyModel-changeStudyInfo');
     let values = [dataObj.name, 
                     dataObj.start_date, 
                     dataObj.duration, 
@@ -76,24 +76,24 @@ function changeStudyInfo(param_study_id, dataObj, callback) {
                     dataObj.study_status, 
                     dataObj.thumbnail]; 
     let query = `UPDATE ${tablename} SET
-                        ${name} = ?, 
-                        ${start_date} = ?, 
-                        ${duration} = ?, 
-                        ${end_date} = ?, 
-                        ${region} = ?, 
-                        ${category} = ?, 
-                        ${description} = ?, 
-                        ${limit} = ?, 
-                        ${study_status} = ?, 
-                        ${thumbnail} = ?
-                WHERE ${study_id}=${param_study_id}`;
+                    ${name} = ?, 
+                    ${start_date} = ?, 
+                    ${duration} = ?, 
+                    ${end_date} = ?, 
+                    ${region} = ?, 
+                    ${category} = ?, 
+                    ${description} = ?, 
+                    ${limit} = ?, 
+                    ${study_status} = ?, 
+                    ${thumbnail} = ?
+                WHERE ${id}=${param_study_id}`;
     logger.debug(`[3]query-${query}`);
     database.executeByValues(query, values, callback);
 }
 
 function closeStudy(param_study_id, callback) {
-    logger.debug('[3]studyDao-deleteStudy');
-    let query = `DELETE FROM ${tablename} WHERE ${study_id}=${param_study_id}`;
+    logger.debug('[3]studyModel-closeStudy');
+    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_study_id}`;
     logger.debug(`[3]query-${query}`);
     database.executeByRaw(query, callback);
 }

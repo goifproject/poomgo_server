@@ -9,7 +9,7 @@ function getAtendanceInfo(req, res) {
     logger.debug('[2]controller-getAtendanceInfo');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
-    model.select(schedule_id, (err, data)=>{
+    model.getAtendanceInfo(schedule_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 출석조회가 완료되었습니다`, data, res);
     });
@@ -31,7 +31,7 @@ function checkAtendance(req, res) {
 // 스터디 시작 할 때 스케줄이랑 스터디 타임 계산해서 출석 만든다.
 // function createAttendance(study_id, schedule_id) {
 //     logger.debug('[2]controller-checkAtendance');
-//     dao.create(study_id, schedule_id, (err, data)=>{
+//     model.create(study_id, schedule_id, (err, data)=>{
 //         if(err) return error.send(500, err, res);
 //         result.send(200, `${study_id}번 스터디 출석표 생성이 완료되었습니다`, {}, res);
 //     });

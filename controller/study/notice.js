@@ -12,20 +12,9 @@ function makeNewNotice(req, res) {
     dataObj.reg_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
     dataObj.start_date = new Date();
-    model.create(study_id, dataObj, (err, data)=>{
+    model.makeNewNotice(study_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디에 공지 생성이 완료되었습니다`, {}, res);
-    });
-}
-
-// study_id번 스터디 공지 전체 조회
-// router.get('/:study_id/notice', notice.selectAll);
-function getNoticeInfoList(req, res) {
-    logger.debug('[2]controller-getNoticeInfoList');
-    let study_id = req.params.study_id;
-    model.selectAll(study_id, (err, data)=>{
-        if(err) return error.send(500, err, res);
-        result.send(200, `${study_id}번 스터디 공지 전체 조회가 완료되었습니다`, data, res);
     });
 }
 
@@ -35,9 +24,20 @@ function getNoticeInfo(req, res) {
     logger.debug('[2]controller-getNoticeInfo');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
-    model.select(notice_id, (err, data)=>{
+    model.getNoticeInfo(notice_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${notice_id}공지 조회가 완료되었습니다`, data, res);
+    });
+}
+
+// study_id번 스터디 공지 전체 조회
+// router.get('/:study_id/notice', notice.selectAll);
+function getNoticeInfoList(req, res) {
+    logger.debug('[2]controller-getNoticeInfoList');
+    let study_id = req.params.study_id;
+    model.getNoticeInfoList(study_id, (err, data)=>{
+        if(err) return error.send(500, err, res);
+        result.send(200, `${study_id}번 스터디 공지 전체 조회가 완료되었습니다`, data, res);
     });
 }
 
@@ -50,7 +50,7 @@ function changeNoticeInfo(req, res) {
     var dataObj = req.body;
     dataObj.update_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
-    model.update(notice_id, dataObj, (err, data)=>{
+    model.changeNoticeInfo(notice_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${notice_id} 공지 업데이트가 완료되었습니다`, {}, res);
     });
@@ -62,7 +62,7 @@ function removeNotice(req, res) {
     logger.debug('[2]controller-removeNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
-    model.deleteNotice(notice_id, (err, data)=>{
+    model.removeNotice(notice_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${notice_id}공지 삭제가 완료되었습니다`, {}, res);
     });

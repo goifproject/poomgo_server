@@ -1,5 +1,4 @@
 let model = require('../../model/studyModel/candidateModel');
-let memberModel = require('../../model/studyModel/memberModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');
@@ -10,7 +9,7 @@ function addCandidateToStudy(req, res) {
     logger.debug('[2]controller-addCandidateToStudy');
     let study_id = req.params.study_id;
     var dataObj = req.body;
-    model.create(study_id, dataObj, (err, data)=>{
+    model.addCandidateToStudy(study_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디에 후보 생성이 완료되었습니다`, {}, res);
     });
@@ -20,7 +19,7 @@ function addCandidateToStudy(req, res) {
 function getCandidateList(req, res) {
     logger.debug('[2]controller-getCandidateList');
     let study_id = req.params.study_id;
-    model.selectAll(study_id, (err, data)=>{
+    model.getCandidateList(study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 후보 전체 조회가 완료되었습니다`, data, res);
     });
@@ -33,13 +32,11 @@ function changeCandidateStatus(req, res) {
     let candidate_id = req.params.candidate_id;
     var dataObj = req.body;
     dataObj.update_date = new Date();
-    model.update(candidate_id, dataObj, (err, data)=>{
+    model.changeCandidateStatus(candidate_id, study_id, dataObj, (err, data)=>{
         // 후보 상태가 수락 바뀔 경우 memeber 생성
         if(dataObj.status == 2) {
-            memberModel.create(candidate_id, study_id, (err, data)=>{
-                if(err) return error.send(500, err, res);
-                return result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다 | ${candidate_id} 멤버가 생성되었습니다`, {}, res);
-            });
+            if(err) return error.send(500, err, res);
+            return result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다 | ${candidate_id} 멤버가 생성되었습니다`, {}, res);
         } else {
             if(err) return error.send(500, err, res);
             return result.send(200, `${study_id}번 스터디 ${candidate_id} 후보 상태 업데이트가 완료되었습니다`, {}, res);
@@ -53,7 +50,7 @@ function removeCandidateFromStudy(req, res) {
     logger.debug('[2]controller-removeCandidateFromStudy');
     let study_id = req.params.study_id;
     let candidate_id = req.params.candidate_id;
-    model.deleteCandidate(candidate_id, (err, data)=>{
+    model.removeCandidateFromStudy(candidate_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${candidate_id}후보 삭제가 완료되었습니다`, data, res);
     });
