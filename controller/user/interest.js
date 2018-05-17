@@ -1,4 +1,4 @@
-let dao = require('../../dao/userDao/interestDao');
+let dao = require('../../model/userModel/interestModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');

@@ -8,11 +8,11 @@ let candidate = require('../controller/study/candidate');
 let member = require('../controller/study/member');
 
 // study - general information
-router.post('/', study.create);
-router.get('/', study.selectAll);
-router.get('/:study_id', study.selectSingle);
-router.put('/:study_id', study.update);
-router.delete('/:study_id', study.delete);
+router.post('/', study.openNewStudy);
+router.get('/', study.getStudyInfo);
+router.get('/:study_id', study.getStudyInfos);
+router.put('/:study_id', study.changeStudyInfo);
+router.delete('/:study_id', study.closeStudy);
 
 // study - study notice information
 router.post('/:study_id/notice', notice.create);

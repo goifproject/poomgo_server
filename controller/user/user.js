@@ -1,4 +1,4 @@
-let dao = require('../../dao/userDao/userDao');
+let dao = require('../../model/userModel/userModel');
 let exposure = require('../../controller/user/exposure');
 let logger = require('../../util/logger');
 let result = require('../../response/result');

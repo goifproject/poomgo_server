@@ -1,4 +1,4 @@
-let dao = require('../../dao/userDao/blacklistDao');
+let dao = require('../../model/userModel/blacklistModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');

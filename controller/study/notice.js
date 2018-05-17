@@ -1,4 +1,4 @@
-let dao = require('../../dao/studyDao/noticeDao');
+let dao = require('../../model/studyModel/noticeModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');

@@ -1,5 +1,5 @@
-let dao = require('../../dao/studyDao/scheduleDao');
-let attendaceDao = require('../../dao/studyDao/attendanceDao');
+let dao = require('../../model/studyModel/scheduleModel');
+let attendaceDao = require('../../model/studyModel/attendanceModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');
