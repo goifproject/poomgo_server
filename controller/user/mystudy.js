@@ -8,7 +8,7 @@ function addStudyToMyStudy(req, res) {
     logger.debug('[2]controller-addStudyToMyStudy');
     let user_id = req.params.user_id;
     var dataObj = req.body;
-    model.create(user_id, dataObj, (err, data)=>{
+    model.addStudyToMyStudy(user_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, "내 스터디 추가 완료되었습니다", {}, res);
     });
@@ -18,7 +18,7 @@ function addStudyToMyStudy(req, res) {
 function getMyStudyList(req, res) {
     logger.debug('[2]controller-getMyStudyList');
     let user_id = req.params.user_id;
-    model.select(user_id, (err, data)=>{
+    model.getMyStudyList(user_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id}회원 내 스터디 조회가 완료되었습니다`, data, res);
     });
@@ -30,7 +30,7 @@ function changeMyStudyInfo(req, res) {
     let user_id = req.params.user_id;
     let study_id = req.params.study_id;
     var dataObj = req.body;
-    model.update(user_id, study_id, dataObj, (err, data)=>{
+    model.changeMyStudyInfo(user_id, study_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id}회원 ${study_id} 내 스터디 업데이트가 완료되었습니다`, {}, res);
     });
@@ -41,7 +41,7 @@ function removeStudyFromMyStudy(req, res) {
     logger.debug('[2]controller-removeStudyFromMyStudy');
     let user_id = req.params.user_id;
     let study_id = req.params.study_id;
-    model.delete(user_id, study_id, (err, data)=>{
+    model.removeStudyFromMyStudy(user_id, study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id}회원 ${study_id} 내 스터디 삭제가 완료되었습니다`, {}, res);
     });

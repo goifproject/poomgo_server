@@ -1,4 +1,5 @@
 let database = require('../../database/database');
+let exposure = require('../../controller/user/exposure_status');
 let tablename = 'user'
 let logger = require('../../util/logger');
 
@@ -16,8 +17,8 @@ const id = "id",
       thumbnail = "thumbnail",
       reg_date = "reg_date";
 
-function create(dataObj, callback) {
-    logger.debug('[3]userDao-create');
+function signup(dataObj, callback) {
+    logger.debug('[3]userModel-signup');
     let values = [dataObj.id,
                     dataObj.password, 
                     dataObj.auth,
@@ -47,23 +48,26 @@ function create(dataObj, callback) {
                         ${reg_date}) 
                 VALUES (?,?,?,?,? ,?,?,?,?,? ,?,?,?)`;
     logger.debug(query);
-    database.executeByValues(query, values, callback);
+    database.executeByValues(query, values, (err, data)=>{
+        // 회원가입 하면서 exposure_status 생성해 줘야 함
+        exposure.createExposureStatus(dataObj.id, (err, data)=>{ callback(err, data) });
+    });
 }
 
-function selectAll(callback) {
-    logger.debug('[3]userDao-selectAll');
-    let query = `SELECT * FROM ${tablename}`;
-    database.executeByRaw(query, callback);
-}
-
-function select(param_user_id, callback) {
-    logger.debug('[3]userDao-select');
+function getUserInfo(param_user_id, callback) {
+    logger.debug('[3]userModel-getUserInfo');
     let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_user_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param_user_id, dataObj, callback) {
-    logger.debug('[3]userDao-update');
+function getUserInfoList(callback) {
+    logger.debug('[3]userModel-getUserInfoList');
+    let query = `SELECT * FROM ${tablename}`;
+    database.executeByRaw(query, callback);
+}
+
+function changeUserInfo(param_user_id, dataObj, callback) {
+    logger.debug('[3]userModel-changeUserInfo');
     let values = [dataObj.id,
                     dataObj.password, 
                     dataObj.auth,
@@ -96,17 +100,17 @@ function update(param_user_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function deleteUser(param_user_id, callback) {
-    logger.debug('[3]userDao-delete');
+function leave(param_user_id, callback) {
+    logger.debug('[3]userModel-leave');
     let query = `DELETE FROM ${tablename} WHERE ${id}=${param_user_id}`;
     database.executeByRaw(query, callback);
 }
 
 
 module.exports = {
-    create : create,
-    selectAll : selectAll,
-    select : select,
-    update : update,
-    delete : deleteUser
+    signup : signup,
+    getUserInfo : getUserInfo,
+    getUserInfoList : getUserInfoList,
+    changeUserInfo : changeUserInfo,
+    leave : leave
 }

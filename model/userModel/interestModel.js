@@ -11,8 +11,8 @@ const user_id = "user_id",
       language = "language",
       certificate = "certificate";
 
-function create(param_user_id, callback) {
-    logger.debug('[3]interestDao-create');
+function makeNewInterest(param_user_id, callback) {
+    logger.debug('[3]interestModel-makeNewInterest');
     let values = [param_user_id,0,0,0,0,0, 0,0];
     let query = `INSERT INTO ${tablename} (
                         ${user_id},
@@ -28,14 +28,14 @@ function create(param_user_id, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function select(param_user_id, callback) {
-    logger.debug('[3]interestDao-select');
+function getInterestInfo(param_user_id, callback) {
+    logger.debug('[3]interestModel-getInterestInfo');
     let query = `SELECt * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param_user_id, dataObj, callback) {
-    logger.debug('[3]interestDao-update');
+function changeInterestInfo(param_user_id, dataObj, callback) {
+    logger.debug('[3]interestModel-changeInterestInfo');
     let values = [dataObj.business,
                     dataObj.planning,
                     dataObj.marketing,
@@ -61,8 +61,8 @@ function deleteInterest(param_user_id) {
 }
 
 module.exports = {
-    create : create,
-    select : select,
-    update : update,
-    delete : deleteInterest
+    makeNewInterest : makeNewInterest,
+    getInterestInfo : getInterestInfo,
+    changeInterestInfo : changeInterestInfo,
+    deleteInterest : deleteInterest
 }

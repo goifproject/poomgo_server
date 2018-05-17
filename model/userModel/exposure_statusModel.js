@@ -14,8 +14,8 @@ const user_id = "user_id",
       career = "career",
       interest = "interest";
 
-function create(param_user_id, callback) {
-    logger.debug('[3]exposureDao-create');
+function makeNewUserES(param_user_id, callback) {
+    logger.debug('[3]exposureModel-makeNewUserES');
     let values = [param_user_id,0,0,0,0, 0,0,0,0,0, 0];
     let query = `INSERT INTO ${tablename} (
                         ${user_id},
@@ -34,14 +34,14 @@ function create(param_user_id, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function select(param_user_id, callback) {
-    logger.debug('[3]exposureDao-select');
+function getUserESInfo(param_user_id, callback) {
+    logger.debug('[3]exposureModel-getUserESInfo');
     let query = `SELECt * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param_user_id, dataObj, callback) {
-    logger.debug('[3]exposureDao-update');
+function changeUserESInfo(param_user_id, dataObj, callback) {
+    logger.debug('[3]exposureModel-changeUserESInfo');
     let values = [dataObj.age,
                     dataObj.region,
                     dataObj.introduction,
@@ -73,8 +73,8 @@ function deleteExposure(param_user_id) {
 }
 
 module.exports = {
-    create : create,
-    select : select,
-    update : update,
-    delete : deleteExposure
+    makeNewUserES : makeNewUserES,
+    getUserESInfo : getUserESInfo,
+    changeUserESInfo : changeUserESInfo,
+    deleteExposure : deleteExposure
 }

@@ -8,8 +8,8 @@ const user_id = "user_id ",
         rating = "rating",
         comment = "comment";
 
-function create(param_user_id, dataObj, callback) {
-    logger.debug('[3]reviewDao-create');
+function writeReview(param_user_id, dataObj, callback) {
+    logger.debug('[3]reviewModel-writeReview');
     let values = [param_user_id, dataObj.writer_id, dataObj.study_id, dataObj.rating, dataObj.comment];
     let query = `INSERT INTO ${tablename} (
                         ${user_id},
@@ -22,14 +22,14 @@ function create(param_user_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function select(param_user_id, callback) {
-    logger.debug('[3]reviewDao-select');
+function readReview(param_user_id, callback) {
+    logger.debug('[3]reviewModel-readReview');
     let query = `SELECT * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
     database.executeByRaw(query, callback);
 }
 
-function update(param_user_id, param_writer_id, dataObj, callback) {
-    logger.debug('[3]reviewDao-update');
+function updateReview(param_user_id, param_writer_id, dataObj, callback) {
+    logger.debug('[3]reviewModel-updateReview');
     let values = [dataObj.rating, dataObj.comment];
     let query = `UPDATE ${tablename} SET
                             ${rating}=?, 
@@ -39,16 +39,16 @@ function update(param_user_id, param_writer_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function deleteReview(param_user_id, param_writer_id, callback) {
-    logger.debug('[3]reviewDao-deleteReview');
+function removeReview(param_user_id, param_writer_id, callback) {
+    logger.debug('[3]reviewModel-removeReview');
     let query = `DELETE FROM ${tablename} 
                 WHERE ${user_id}=${param_user_id} AND ${study_id}=${param_writer_id}`;
     database.executeByRaw(query, callback);
 }
 
 module.exports = {
-    create : create,
-    select : select,
-    update : update,
-    delete : deleteReview
+    writeReview : writeReview,
+    readReview : readReview,
+    updateReview : updateReview,
+    removeReview : removeReview
 }

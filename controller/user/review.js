@@ -8,7 +8,7 @@ function writeReview(req, res) {
     logger.debug('[2]controller-writeReview');
     let user_id = req.params.user_id;
     var dataObj = req.body;
-    model.create(user_id, dataObj, (err, data)=>{
+    model.writeReview(user_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, "리뷰 추가 완료되었습니다", {}, res);
     });
@@ -19,7 +19,7 @@ function writeReview(req, res) {
 function readReview(req, res) {
     logger.debug('[2]controller-readReview');
     let user_id = req.params.user_id;
-    model.select(user_id, (err, data)=>{
+    model.readReview(user_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id}회원의 전체 리뷰 조회가 완료되었습니다`, data, res);
     });
@@ -43,7 +43,7 @@ function updateReview(req, res) {
     let user_id = req.params.user_id;
     let writer_id = req.params.writer_id;
     var dataObj = req.body;
-    model.update(user_id, writer_id, dataObj, (err, data)=>{
+    model.updateReview(user_id, writer_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${writer_id}회원이 작성한 ${user_id}의 리뷰 업데이트가 완료되었습니다`, {}, res);
     });
@@ -54,7 +54,7 @@ function removeReview(req, res) {
     logger.debug('[2]controller-removeReview');
     let user_id = req.params.user_id;
     let writer_id = req.params.writer_id;
-    model.delete(user_id, writer_id, dataObj, (err, data)=>{
+    model.removeReview(user_id, writer_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${writer_id}회원이 작성한 ${user_id}의 리뷰 삭제가 완료되었습니다`, {}, res);
     });
