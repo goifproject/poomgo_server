@@ -16,17 +16,17 @@ router.delete('/:study_id', study.closeStudy);
 
 // study - study notice information
 router.post('/:study_id/notice', notice.create);
-router.get('/:study_id/notice', notice.selectAll);
 router.get('/:study_id/notice/:notice_id', notice.selectSingle);
+router.get('/:study_id/notice', notice.selectAll);
 router.put('/:study_id/notice/:notice_id', notice.update);
 router.delete('/:study_id/:notice/:notice_id', notice.delete);
 
 // study - study schedule information
-router.post('/:study_id/schedule', schedule.create);
-router.get('/:study_id/schedule', schedule.selectAll);
-router.get('/:study_id/schedule/:schedule_id', schedule.selectSingle);
-router.put('/:study_id/schedule/:schedule_id', schedule.update);
-router.delete('/:study_id/schedule/:schedule_id', schedule.delete);
+router.post('/:study_id/schedule', schedule.addNewSchedule);
+router.get('/:study_id/schedule/:schedule_id', schedule.getScheduleInfo);
+router.get('/:study_id/schedule', schedule.getScheduleInfos);
+router.put('/:study_id/schedule/:schedule_id', schedule.changeScheduleInfo);
+router.delete('/:study_id/schedule/:schedule_id', schedule.deleteSchedule);
 
 // study - attendacne information
 router.get('/:study_id/attendance/:schedule_id', attendance.select);
