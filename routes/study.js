@@ -15,11 +15,11 @@ router.put('/:study_id', study.changeStudyInfo);
 router.delete('/:study_id', study.closeStudy);
 
 // study - study notice information
-router.post('/:study_id/notice', notice.create);
-router.get('/:study_id/notice/:notice_id', notice.selectSingle);
-router.get('/:study_id/notice', notice.selectAll);
-router.put('/:study_id/notice/:notice_id', notice.update);
-router.delete('/:study_id/:notice/:notice_id', notice.delete);
+router.post('/:study_id/notice', notice.makeNotice);
+router.get('/:study_id/notice/:notice_id', notice.readNotice);
+router.get('/:study_id/notice', notice.readNotices);
+router.put('/:study_id/notice/:notice_id', notice.changeNotice);
+router.delete('/:study_id/:notice/:notice_id', notice.deleteNotice);
 
 // study - study schedule information
 router.post('/:study_id/schedule', schedule.addNewSchedule);
