@@ -23,9 +23,9 @@ router.get('/:user_id/interest', interest.getInterestInfo);
 router.put('/:user_id/interest', interest.changeInterestInfo);
 
 // user - blacklist information
-router.post('/:user_id/blacklist', blacklist.addToBlackList);
+router.post('/:user_id/blacklist', blacklist.addUserToBlackList);
 router.get('/:user_id/blacklist', blacklist.getMyBlackList);
-router.delete('/:user_id/blacklist/:black_id', blacklist.removeFromBlackList);
+router.delete('/:user_id/blacklist/:black_id', blacklist.removeUserFromBlackList);
 
 // user - mystudy information
 router.post('/:user_id/mystudy', mystudy.addStudyToMyStudy);

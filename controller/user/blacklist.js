@@ -4,7 +4,7 @@ let result = require('../../response/result');
 let error = require('../../response/error');
 
 // router.post('/:user_id/blacklist', blacklist.add);
-function addToBlackList(req, res) {
+function addUserToBlackList(req, res) {
     logger.debug('[2]controller-addToBlackList');
     let user_id = req.params.user_id;
     var dataObj = req.body;
@@ -26,7 +26,7 @@ function getMyBlackList(req, res) {
 }
 
 // router.delete('/:user_id/blacklist/:black_id', blacklist.delete);
-function removeFromBlackList(req, res) {
+function removeUserFromBlackList(req, res) {
     logger.debug('[2]controller-removeFromBlackList');
     let user_id = req.params.user_id;
     let black_id = req.params.black_id;
@@ -38,7 +38,7 @@ function removeFromBlackList(req, res) {
 }
 
 module.exports = {
-    addToBlackList : addToBlackList,
+    addUserToBlackList : addUserToBlackList,
     getMyBlackList : getMyBlackList,
-    removeFromBlackList : removeFromBlackList
+    removeUserFromBlackList : removeUserFromBlackList
 }
