@@ -6,7 +6,7 @@ let error = require('../../response/error');
 // 스터디 생성
 // router.post('/:study_id', study.create);
 function openNewStudy(req, res) {
-    logger.debug('[2]controller-openStudy');
+    logger.debug('[2]controller-openNewStudy');
     var dataObj = req.body;
     dataObj.reg_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
@@ -31,8 +31,8 @@ function getStudyInfo(req, res) {
 
 // 스터디 전체 조회
 // router.get('/', study.selectAll);
-function getStudyInfos(req, res) {
-    logger.debug('[2]controller-geStudyInfos');
+function getStudyInfoList(req, res) {
+    logger.debug('[2]controller-getStudyInfoList');
     model.selectAll((err, data)=>{
         // TODO study_time 추가해줘야 함
         if(err) return error.send(500, err, res);
@@ -68,7 +68,7 @@ function closeStudy(req, res) {
 module.exports = {
     openNewStudy : openNewStudy,
     getStudyInfo : getStudyInfo,
-    getStudyInfos : getStudyInfos,
+    getStudyInfoList : getStudyInfoList,
     changeStudyInfo : changeStudyInfo,
     closeStudy : closeStudy
 }

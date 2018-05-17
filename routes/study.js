@@ -10,37 +10,37 @@ let member = require('../controller/study/member');
 // study - general information
 router.post('/', study.openNewStudy);
 router.get('/', study.getStudyInfo);
-router.get('/:study_id', study.getStudyInfos);
+router.get('/:study_id', study.getStudyInfoList);
 router.put('/:study_id', study.changeStudyInfo);
 router.delete('/:study_id', study.closeStudy);
 
 // study - study notice information
-router.post('/:study_id/notice', notice.makeNotice);
+router.post('/:study_id/notice', notice.makeNewNotice);
 router.get('/:study_id/notice/:notice_id', notice.getNoticeInfo);
-router.get('/:study_id/notice', notice.getNoticeInfos);
+router.get('/:study_id/notice', notice.getNoticeInfoList);
 router.put('/:study_id/notice/:notice_id', notice.changeNoticeInfo);
-router.delete('/:study_id/:notice/:notice_id', notice.deleteNotice);
+router.delete('/:study_id/:notice/:notice_id', notice.removeNotice);
 
 // study - study schedule information
 router.post('/:study_id/schedule', schedule.addNewSchedule);
 router.get('/:study_id/schedule/:schedule_id', schedule.getScheduleInfo);
-router.get('/:study_id/schedule', schedule.getScheduleInfos);
+router.get('/:study_id/schedule', schedule.getScheduleInfoList);
 router.put('/:study_id/schedule/:schedule_id', schedule.changeScheduleInfo);
-router.delete('/:study_id/schedule/:schedule_id', schedule.deleteSchedule);
+router.delete('/:study_id/schedule/:schedule_id', schedule.removeSchedule);
 
 // study - attendacne information
-router.get('/:study_id/attendance/:schedule_id', attendance.select);
-router.put('/:study_id/attendance/:attendance_id', attendance.check);
+router.get('/:study_id/attendance/:schedule_id', attendance.getAtendanceInfo);
+router.put('/:study_id/attendance/:attendance_id', attendance.checkAtendance);
 
 // study - member candidate information
-router.post('/:study_id/candidate', candidate.add);
-router.get('/:study_id/candidate', candidate.selectAll);
-router.put('/:study_id/candidate/:candidate_id', candidate.update);
-router.delete('/:study_id/candidate/:candidate_id', candidate.delete);
+router.post('/:study_id/candidate', candidate.addCandidateToStudy);
+router.get('/:study_id/candidate', candidate.getCandidateList);
+router.put('/:study_id/candidate/:candidate_id', candidate.changeCandidateStatus);
+router.delete('/:study_id/candidate/:candidate_id', candidate.removeCandidateFromStudy);
 
 // study - member list
 router.get('/:study_id/members', member.getMemberList);
-router.delete('/:study_id/members/:member_id', member.deleteMemberFromStudy);
+router.delete('/:study_id/members/:member_id', member.removeMemberFromStudy);
 
 
 module.exports = router;

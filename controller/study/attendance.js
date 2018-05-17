@@ -5,8 +5,8 @@ let error = require('../../response/error');
 
 // 스케줄이 없는 출석 여부는 의미가 없기 때문에 출석여부를 검색하려면 스케줄로 검색하려고 했으나, 일단은 따로 검색하게 하고 추후 내부에 배열로 추가시켜 응답할지 생각해 보자
 // router.get('/:study_id/attendance/:schedule_id', attendance.check);
-function selectAtendance(req, res) {
-    logger.debug('[2]controller-selectAtendance');
+function getAtendanceInfo(req, res) {
+    logger.debug('[2]controller-getAtendanceInfo');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
     dao.select(schedule_id, (err, data)=>{
@@ -38,6 +38,6 @@ function checkAtendance(req, res) {
 // }
 
 module.exports = {
-    select : selectAtendance,
-    check : checkAtendance
+    getAtendanceInfo : getAtendanceInfo,
+    checkAtendance : checkAtendance
 }

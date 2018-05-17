@@ -5,8 +5,8 @@ let error = require('../../response/error');
 
 // study_id번 스터디에 공지 생성
 // router.post('/:study_id/notice', notice.create);
-function makeNotice(req, res) {
-    logger.debug('[2]controller-createNotice');
+function makeNewNotice(req, res) {
+    logger.debug('[2]controller-makeNewNotice');
     let study_id = req.params.study_id;
     var dataObj = req.body;
     dataObj.reg_date = new Date();
@@ -20,8 +20,8 @@ function makeNotice(req, res) {
 
 // study_id번 스터디 공지 전체 조회
 // router.get('/:study_id/notice', notice.selectAll);
-function getNoticeInfos(req, res) {
-    logger.debug('[2]controller-selectAllNotices');
+function getNoticeInfoList(req, res) {
+    logger.debug('[2]controller-getNoticeInfoList');
     let study_id = req.params.study_id;
     model.selectAll(study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
@@ -32,7 +32,7 @@ function getNoticeInfos(req, res) {
 // study_id번 스터디 notice_id 공지 조회
 // router.get('/:study_id/notice/:notice_id', notice.selectSingle);
 function getNoticeInfo(req, res) {
-    logger.debug('[2]controller-selectSingleNotice');
+    logger.debug('[2]controller-getNoticeInfo');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
     model.select(notice_id, (err, data)=>{
@@ -44,7 +44,7 @@ function getNoticeInfo(req, res) {
 // study_id번 스터디 notice_id 공지 업데이트
 // router.put('/:study_id/notice/:notice_id', notice.update);
 function changeNoticeInfo(req, res) {
-    logger.debug('[2]controller-updateNotice');
+    logger.debug('[2]controller-changeNoticeInfo');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
     var dataObj = req.body;
@@ -58,8 +58,8 @@ function changeNoticeInfo(req, res) {
 
 // study_id번 스터디 notice_id 공지 삭제
 // router.delete('/:study_id/:notice/:notice_id', notice.delete);
-function deleteNotice(req, res) {
-    logger.debug('[2]controller-deleteNotice');
+function removeNotice(req, res) {
+    logger.debug('[2]controller-removeNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
     model.deleteNotice(notice_id, (err, data)=>{
@@ -69,9 +69,9 @@ function deleteNotice(req, res) {
 }
 
 module.exports = {
-    makeNotice : makeNotice,
+    makeNewNotice : makeNewNotice,
     getNoticeInfo : getNoticeInfo,
-    getNoticeInfos : getNoticeInfos,
+    getNoticeInfoList : getNoticeInfoList,
     changeNoticeInfo : changeNoticeInfo,
-    deleteNotice : deleteNotice
+    removeNotice : removeNotice
 }

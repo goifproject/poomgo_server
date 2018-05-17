@@ -21,8 +21,8 @@ function getMemberList(req, res) {
 }
 
 // router.delete('/:study_id/members/:member_id', member.delete);
-function deleteMemberFromStudy(req, res) {
-    logger.debug('[2]controller-deleteMemberFromStudy');
+function removeMemberFromStudy(req, res) {
+    logger.debug('[2]controller-removeMemberFromStudy');
     let study_id = req.params.study_id;
     let member_id = req.params.member_id;
     dao.delete(member_id, (err, data)=>{
@@ -33,5 +33,5 @@ function deleteMemberFromStudy(req, res) {
 
 module.exports = {
     getMemberList : getMemberList,
-    deleteMemberFromStudy : deleteMemberFromStudy
+    removeMemberFromStudy : removeMemberFromStudy
 }
