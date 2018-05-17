@@ -13,6 +13,6 @@ exports.send = function(code, msg, rows, res) {
     result.result.code = code;
     result.result.msg = msg;
     result.data = rows;
-    res.send(JSON.stringify(result));     
+    res.send(result);     
     logger.debug(`[5] COMPLETE`)
 }
