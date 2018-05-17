@@ -1,55 +1,55 @@
-let dao = require('../../model/userModel/mystudyModel');
+let model = require('../../model/userModel/mystudyModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');
 
 // router.post('/:user_id/mystudy', mystudy.add);
-function addToMyStudy(req, res) {
-    logger.debug('[2]controller-addToMyStudy');
+function addStudyToMyStudy(req, res) {
+    logger.debug('[2]controller-addStudyToMyStudy');
     let user_id = req.params.user_id;
     var dataObj = req.body;
-    dao.create(user_id, dataObj, (err, data)=>{
+    model.create(user_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, "내 스터디 추가 완료되었습니다", {}, res);
     });
 }
 
 // router.get('/:user_id/mystudy', mystudy.read);
-function readMyStudy(req, res) {
-    logger.debug('[2]controller-readMyStudy');
+function getMyStudyList(req, res) {
+    logger.debug('[2]controller-getMyStudyList');
     let user_id = req.params.user_id;
-    dao.select(user_id, (err, data)=>{
+    model.select(user_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id}회원 내 스터디 조회가 완료되었습니다`, data, res);
     });
 }
 
 // router.put('/:user_id/mystudy/:study_id', mystudy.update);
-function updateMyStudy(req, res) {
-    logger.debug('[2]controller-updateMyStudy');
+function changeMyStudyInfo(req, res) {
+    logger.debug('[2]controller-changeMyStudyInfo');
     let user_id = req.params.user_id;
     let study_id = req.params.study_id;
     var dataObj = req.body;
-    dao.update(user_id, study_id, dataObj, (err, data)=>{
+    model.update(user_id, study_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id}회원 ${study_id} 내 스터디 업데이트가 완료되었습니다`, {}, res);
     });
 }
 
 // router.delete('/:user_id/mystudy/:study_id', mystudy.delete);
-function deleteMyStudy(req, res) {
-    logger.debug('[2]controller-deleteMyStudy');
+function removeStudyFromMyStudy(req, res) {
+    logger.debug('[2]controller-removeStudyFromMyStudy');
     let user_id = req.params.user_id;
     let study_id = req.params.study_id;
-    dao.delete(user_id, study_id, (err, data)=>{
+    model.delete(user_id, study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id}회원 ${study_id} 내 스터디 삭제가 완료되었습니다`, {}, res);
     });
 }
 
 module.exports = {
-    add : addToMyStudy,
-    read : readMyStudy,
-    update : updateMyStudy,
-    delete : deleteMyStudy
+    addStudyToMyStudy : addStudyToMyStudy,
+    getMyStudyList : getMyStudyList,
+    changeMyStudyInfo : changeMyStudyInfo,
+    removeStudyFromMyStudy : removeStudyFromMyStudy
 }

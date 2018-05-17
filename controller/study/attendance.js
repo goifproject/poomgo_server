@@ -1,4 +1,4 @@
-let dao = require('../../model/studyModel/attendanceModel');
+let model = require('../../model/studyModel/attendanceModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');
@@ -9,7 +9,7 @@ function getAtendanceInfo(req, res) {
     logger.debug('[2]controller-getAtendanceInfo');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
-    dao.select(schedule_id, (err, data)=>{
+    model.select(schedule_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 출석조회가 완료되었습니다`, data, res);
     });
@@ -21,7 +21,7 @@ function checkAtendance(req, res) {
     let study_id = req.params.study_id;
     let attendance_id = req.params.attendance_id;
     var dataObj = req.body;
-    dao.update(attendance_id, dataObj, (err, data)=>{
+    model.update(attendance_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${attendance_id} 출석 상태 변경이 완료되었습니다`, {}, res);
     });
