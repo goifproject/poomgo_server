@@ -1,7 +1,6 @@
 let database = require('../../database/database');
 let tablename = 'study'
 let logger = require('../../util/logger');
-
 const study_id = "id",
       director_id = "director_id",
       name = "name",
@@ -17,7 +16,7 @@ const study_id = "id",
       number = "number",
       thumbnail = "thumbnail";
 
-function createStudy(dataObj, callback) {
+function createNewStudy(dataObj, callback) {
     logger.debug('[3]studyDao-create');
     // study_time도 꺼내와야 함
     let values = [dataObj.director_id, 
@@ -50,21 +49,21 @@ function createStudy(dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function selectAll(callback) {
+function getStudyInfoList(callback) {
     logger.debug('[3]studyDao-selectAll');
     let query = `SELECT * FROM ${tablename}`;
     logger.debug(`[3]query-${query}`);
     database.executeByRaw(query, callback);
 }
 
-function select(param_study_id, callback) {
+function getStudyInfo(param_study_id, callback) {
     logger.debug('[3]studyDao-select');
     let query = `SELECt * FROM ${tablename} WHERE ${study_id}=${param_study_id}`;
     logger.debug(`[3]query-${query}`);
     database.executeByRaw(query, callback);
 }
 
-function update(param_study_id, dataObj, callback) {
+function changeStudyInfo(param_study_id, dataObj, callback) {
     logger.debug('[3]studyDao-update');
     let values = [dataObj.name, 
                     dataObj.start_date, 
@@ -92,7 +91,7 @@ function update(param_study_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function deleteStudy(param_study_id, callback) {
+function closeStudy(param_study_id, callback) {
     logger.debug('[3]studyDao-deleteStudy');
     let query = `DELETE FROM ${tablename} WHERE ${study_id}=${param_study_id}`;
     logger.debug(`[3]query-${query}`);
@@ -100,9 +99,9 @@ function deleteStudy(param_study_id, callback) {
 }
 
 module.exports = {
-    create : createStudy,
-    selectAll : selectAll,
-    select : select,
-    update : update,
-    deleteStudy : deleteStudy
+    createNewStudy : createNewStudy,
+    getStudyInfo : getStudyInfo,
+    getStudyInfoList : getStudyInfoList,
+    changeStudyInfo : changeStudyInfo,
+    closeStudy : closeStudy
 }

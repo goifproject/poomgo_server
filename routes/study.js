@@ -8,7 +8,7 @@ let candidate = require('../controller/study/candidate');
 let member = require('../controller/study/member');
 
 // study - general information
-router.post('/', study.openNewStudy);
+router.post('/', study.createNewStudy);
 router.get('/', study.getStudyInfo);
 router.get('/:study_id', study.getStudyInfoList);
 router.put('/:study_id', study.changeStudyInfo);

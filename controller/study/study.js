@@ -5,13 +5,13 @@ let error = require('../../response/error');
 
 // 스터디 생성
 // router.post('/:study_id', study.create);
-function openNewStudy(req, res) {
-    logger.debug('[2]controller-openNewStudy');
+function createNewStudy(req, res) {
+    logger.debug('[2]controller-createNewStudy');
     var dataObj = req.body;
     dataObj.reg_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
     dataObj.start_date = new Date();
-    model.create(dataObj, (err, data)=>{
+    model.createNewStudy(dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, "스터디 생성이 완료되었습니다", {}, res);
     });
@@ -22,7 +22,7 @@ function openNewStudy(req, res) {
 function getStudyInfo(req, res) {
     logger.debug('[2]controller-getStudyInfo');
     let study_id = req.params.study_id;
-    model.select(study_id, (err, data)=>{
+    model.getStudyInfo(study_id, (err, data)=>{
         // TODO study_time 추가해줘야 함
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 조회가 완료되었습니다`, data, res);
@@ -33,7 +33,7 @@ function getStudyInfo(req, res) {
 // router.get('/', study.selectAll);
 function getStudyInfoList(req, res) {
     logger.debug('[2]controller-getStudyInfoList');
-    model.selectAll((err, data)=>{
+    model.getStudyInfoList((err, data)=>{
         // TODO study_time 추가해줘야 함
         if(err) return error.send(500, err, res);
         result.send(200, "스터디 전체 조회가 완료되었습니다", data, res);
@@ -48,7 +48,7 @@ function changeStudyInfo(req, res) {
     var dataObj = req.body;
     dataObj.update_date = new Date();
     // TODO Datetime 클라이언트랑 협의 필요함
-    model.update(study_id, dataObj, (err, data)=>{
+    model.changeStudyInfo(study_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 업데이트가 완료되었습니다`, {}, res);
     });
@@ -59,14 +59,14 @@ function changeStudyInfo(req, res) {
 function closeStudy(req, res) {
     logger.debug('[2]controller-closeStudy');
     let study_id = req.params.study_id;
-    model.deleteStudy(study_id, (err, data)=>{
+    model.closeStudy(study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 삭제가 완료되었습니다`, {}, res);
     });
 }
 
 module.exports = {
-    openNewStudy : openNewStudy,
+    createNewStudy : createNewStudy,
     getStudyInfo : getStudyInfo,
     getStudyInfoList : getStudyInfoList,
     changeStudyInfo : changeStudyInfo,
