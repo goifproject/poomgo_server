@@ -7,7 +7,7 @@ let error = require('../../response/error');
 // study_id번 스터디에 스케줄 생성
 // router.post('/:study_id/schedule', schedule.create);
 function addNewSchedule(req, res) {
-    logger.debug('[2]controller-createSchedule');
+    logger.debug('[2]controller-addNewSchedule');
     let study_id = req.params.study_id;
     var dataObj = req.body;
     // TODO 클라이언트와 datetime만 협의하면 됨
@@ -24,7 +24,7 @@ function addNewSchedule(req, res) {
 // router.get('/:study_id/schedule/:schedule_id', schedule.selectSingle);
 function getScheduleInfo(req, res) {
     // TODO 스케줄 조회시 반드시 권한 파악을 해서 출석 데이터를 같이 보내줄 것인지 결정해야 한다
-    logger.debug('[2]controller-selectSingleSchedule');
+    logger.debug('[2]controller-getScheduleInfo');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
     model.select(schedule_id, (err, data)=>{
@@ -38,7 +38,7 @@ function getScheduleInfo(req, res) {
 // router.get('/:study_id/schedule', schedule.selectAll);
 function getScheduleInfos(req, res) {
     // TODO 스케줄 조회시 반드시 권한 파악을 해서 출석 데이터를 같이 보내줄 것인지 결정해야 한다
-    logger.debug('[2]controller-selectAllSchedules');
+    logger.debug('[2]controller-getScheduleInfos');
     let study_id = req.params.study_id;
     model.selectAll(study_id, (err, data)=>{
         // TODO 추가로 attendace 테이블에 가서 출석 데이터까지 함께 보내준다
@@ -52,7 +52,7 @@ function getScheduleInfos(req, res) {
 // study_id번 스터디 schedule_id 스케줄 업데이트
 // router.put('/:study_id/schedule/:schedule_id', schedule.update);
 function changeScheduleInfo(req, res) {
-    logger.debug('[2]controller-updateSchedule');
+    logger.debug('[2]controller-changeScheduleInfo');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
     let dataObj = req.body;

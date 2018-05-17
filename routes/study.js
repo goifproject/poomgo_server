@@ -16,9 +16,9 @@ router.delete('/:study_id', study.closeStudy);
 
 // study - study notice information
 router.post('/:study_id/notice', notice.makeNotice);
-router.get('/:study_id/notice/:notice_id', notice.readNotice);
-router.get('/:study_id/notice', notice.readNotices);
-router.put('/:study_id/notice/:notice_id', notice.changeNotice);
+router.get('/:study_id/notice/:notice_id', notice.getNoticeInfo);
+router.get('/:study_id/notice', notice.getNoticeInfos);
+router.put('/:study_id/notice/:notice_id', notice.changeNoticeInfo);
 router.delete('/:study_id/:notice/:notice_id', notice.deleteNotice);
 
 // study - study schedule information
@@ -39,8 +39,8 @@ router.put('/:study_id/candidate/:candidate_id', candidate.update);
 router.delete('/:study_id/candidate/:candidate_id', candidate.delete);
 
 // study - member list
-router.get('/:study_id/members', member.select);
-router.delete('/:study_id/members/:member_id', member.delete);
+router.get('/:study_id/members', member.getMemberList);
+router.delete('/:study_id/members/:member_id', member.deleteMemberFromStudy);
 
 
 module.exports = router;

@@ -5,14 +5,14 @@ let error = require('../../response/error');
 
 // add
 // candidate 상태가 변하면서 상태 변화값이 
-function addMember(study_id, member_id, callback) {
-    logger.debug('[2]controller-addMember');
+function addMemberToStudy(study_id, member_id, callback) {
+    logger.debug('[2]controller-addMemberToStudy');
     dao.create(study_id, member_id, callback);
 }
 
 // router.get('/:study_id/members', member.select);
-function selectMembers(req, res) {
-    logger.debug('[2]controller-selectMembers');
+function getMemberList(req, res) {
+    logger.debug('[2]controller-getMemberList');
     let study_id = req.params.study_id;
     dao.selectAll(study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
@@ -21,8 +21,8 @@ function selectMembers(req, res) {
 }
 
 // router.delete('/:study_id/members/:member_id', member.delete);
-function deleteMember(req, res) {
-    logger.debug('[2]controller-deleteMember');
+function deleteMemberFromStudy(req, res) {
+    logger.debug('[2]controller-deleteMemberFromStudy');
     let study_id = req.params.study_id;
     let member_id = req.params.member_id;
     dao.delete(member_id, (err, data)=>{
@@ -32,6 +32,6 @@ function deleteMember(req, res) {
 }
 
 module.exports = {
-    select : selectMembers,
-    delete : deleteMember
+    getMemberList : getMemberList,
+    deleteMemberFromStudy : deleteMemberFromStudy
 }

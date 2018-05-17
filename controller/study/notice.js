@@ -20,7 +20,7 @@ function makeNotice(req, res) {
 
 // study_id번 스터디 공지 전체 조회
 // router.get('/:study_id/notice', notice.selectAll);
-function readNotices(req, res) {
+function getNoticeInfos(req, res) {
     logger.debug('[2]controller-selectAllNotices');
     let study_id = req.params.study_id;
     model.selectAll(study_id, (err, data)=>{
@@ -31,7 +31,7 @@ function readNotices(req, res) {
 
 // study_id번 스터디 notice_id 공지 조회
 // router.get('/:study_id/notice/:notice_id', notice.selectSingle);
-function readNotice(req, res) {
+function getNoticeInfo(req, res) {
     logger.debug('[2]controller-selectSingleNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
@@ -43,7 +43,7 @@ function readNotice(req, res) {
 
 // study_id번 스터디 notice_id 공지 업데이트
 // router.put('/:study_id/notice/:notice_id', notice.update);
-function changeNotice(req, res) {
+function changeNoticeInfo(req, res) {
     logger.debug('[2]controller-updateNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
@@ -70,8 +70,8 @@ function deleteNotice(req, res) {
 
 module.exports = {
     makeNotice : makeNotice,
-    readNotice : readNotice,
-    readNotices : readNotices,
-    changeNotice : changeNotice,
+    getNoticeInfo : getNoticeInfo,
+    getNoticeInfos : getNoticeInfos,
+    changeNoticeInfo : changeNoticeInfo,
     deleteNotice : deleteNotice
 }
