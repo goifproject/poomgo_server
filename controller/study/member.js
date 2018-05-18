@@ -12,6 +12,16 @@ function addMemberToStudy(study_id, member_id, callback) {
 
 // router.get('/:study_id/members', member.select);
 function getMemberList(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getMemberList');
     let study_id = req.params.study_id;
     model.getMemberList(study_id, (err, data)=>{
@@ -22,6 +32,16 @@ function getMemberList(req, res, next) {
 
 // router.delete('/:study_id/members/:member_id', member.delete);
 function removeMemberFromStudy(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-removeMemberFromStudy');
     let study_id = req.params.study_id;
     let member_id = req.params.member_id;

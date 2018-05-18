@@ -16,66 +16,71 @@ const id = "id",
       number = "number",
       thumbnail = "thumbnail";
 
-function createNewStudy(dataObj, callback) {
-    logger.debug('[3]studyModel-createNewStudy');
-    // study_time도 꺼내와야 함
-    let values = [dataObj.director_id, 
-                    dataObj.name, 
-                    dataObj.reg_date, 
-                    dataObj.start_date,
-                    dataObj.duration, 
-                    dataObj.region, 
-                    dataObj.category,
-                    dataObj.description, 
-                    dataObj.limit, 
-                    dataObj.status, 
-                    dataObj.number,
-                    dataObj.thumbnail]; 
-    let query = `INSERT INTO 
-                ${tablename} (
-                    ${director_id}, 
-                    ${name}, 
-                    ${reg_date}, 
-                    ${start_date}, 
-                    ${duration}, 
-                    ${region}, 
-                    ${category}, 
-                    ${description}, 
-                    ${limit}, 
-                    ${number},
-                    ${status}, 
-                    ${thumbnail}) 
-                VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?)`;
-    // logger.debug(`[3]query-${query}`);
-    database.executeByValues(query, values, callback);
+function createNewStudy(dataObj, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]studyModel-createNewStudy');
+        // study_time도 꺼내와야 함
+        let values = [dataObj.director_id, dataObj.name, 
+                        dataObj.reg_date, dataObj.start_date,
+                        dataObj.duration, dataObj.region, 
+                        dataObj.category, dataObj.description, 
+                        dataObj.limit, dataObj.status, 
+                        dataObj.number, dataObj.thumbnail]; 
+        let query = `INSERT INTO 
+                    ${tablename} (
+                        ${director_id}, ${name}, 
+                        ${reg_date}, ${start_date}, 
+                        ${duration}, ${region}, 
+                        ${category}, ${description}, 
+                        ${limit}, ${number},
+                        ${status}, ${thumbnail}) 
+                    VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?)`;
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });    
 }
 
-function getStudyInfo(param_study_id, callback) {
-    logger.debug('[3]studyModel-getStudyInfo');
-    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_study_id}`;
-    // logger.debug(`[3]query-${query}`);
-    database.executeByRaw(query, callback);
+function getStudyInfo(param_study_id, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]studyModel-getStudyInfo');
+        let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_study_id}`;
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
-function getStudyInfoList(callback) {
-    logger.debug('[3]studyModel-getStudyInfoList');
-    // let query = `SELECT * FROM ${tablename}`;
-    database.executeByRaw(query, callback);
+function getStudyInfoList(resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]studyModel-getStudyInfoList');
+        let query = `SELECT * FROM ${tablename}`;
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
-function changeStudyInfo(param_study_id, dataObj, callback) {
-    logger.debug('[3]studyModel-changeStudyInfo');
-    let values = [dataObj.name, 
-                    dataObj.start_date, 
-                    dataObj.duration, 
-                    dataObj.end_date, 
-                    dataObj.region,
-                    dataObj.category, 
-                    dataObj.description, 
-                    dataObj.limit, 
-                    dataObj.study_status, 
-                    dataObj.thumbnail]; 
-    let query = `UPDATE ${tablename} SET
+function changeStudyInfo(param_study_id, dataObj, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]studyModel-changeStudyInfo');
+        let values = [dataObj.name, 
+            dataObj.start_date, 
+            dataObj.duration, 
+            dataObj.end_date, 
+            dataObj.region,
+            dataObj.category, 
+            dataObj.description, 
+            dataObj.limit, 
+            dataObj.study_status, 
+            dataObj.thumbnail]; 
+        let query = `UPDATE ${tablename} SET
                     ${name} = ?, 
                     ${start_date} = ?, 
                     ${duration} = ?, 
@@ -87,15 +92,26 @@ function changeStudyInfo(param_study_id, dataObj, callback) {
                     ${study_status} = ?, 
                     ${thumbnail} = ?
                 WHERE ${id}=${param_study_id}`;
-    logger.debug(`[3]query-${query}`);
-    database.executeByValues(query, values, callback);
+        logger.debug(`[3]query-${query}`);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
-function closeStudy(param_study_id, callback) {
-    logger.debug('[3]studyModel-closeStudy');
-    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_study_id}`;
-    logger.debug(`[3]query-${query}`);
-    database.executeByRaw(query, callback);
+function closeStudy(param_study_id, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{ 
+        logger.debug('[3]studyModel-closeStudy');
+        let query = `DELETE FROM ${tablename} WHERE ${id}=${param_study_id}`;
+        logger.debug(`[3]query-${query}`);
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
 module.exports = {

@@ -4,6 +4,16 @@ let result = require('../../response/result');
 let error = require('../../response/error');
 
 function makeNewUserES(user_id, callback) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     // 처음에는 빈 데이터를 만들고 추후 update에서 따로 데이터를 받도록 하자
     logger.debug('[2]controller-makeNewUserES');
     model.makeNewUserES(user_id, callback);
@@ -11,6 +21,16 @@ function makeNewUserES(user_id, callback) {
 
 // router.get('/:user_id/exposure', exposure_status.read);
 function getUserESInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getUserESInfo');
     // 유저 인증 해야 함
     let user_id = req.params.user_id;
@@ -22,6 +42,16 @@ function getUserESInfo(req, res, next) {
 
 // router.put('/:user_id/exposure', exposure_status.update);
 function changeUserESInfo(req, re, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     // logger.debug('[2]controller-changeUserESInfo');
     let user_id = req.params.user_id;
     var dataObj = req.body;

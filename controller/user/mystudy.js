@@ -5,6 +5,16 @@ let error = require('../../response/error');
 
 // router.post('/:user_id/mystudy', mystudy.add);
 function addStudyToMyStudy(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-addStudyToMyStudy');
     let user_id = req.params.user_id;
     var dataObj = req.body;
@@ -16,6 +26,16 @@ function addStudyToMyStudy(req, res, next) {
 
 // router.get('/:user_id/mystudy', mystudy.read);
 function getMyStudyList(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getMyStudyList');
     let user_id = req.params.user_id;
     model.getMyStudyList(user_id, (err, data)=>{
@@ -26,6 +46,16 @@ function getMyStudyList(req, res, next) {
 
 // router.put('/:user_id/mystudy/:study_id', mystudy.update);
 function changeMyStudyInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-changeMyStudyInfo');
     let user_id = req.params.user_id;
     let study_id = req.params.study_id;
@@ -38,6 +68,16 @@ function changeMyStudyInfo(req, res, next) {
 
 // router.delete('/:user_id/mystudy/:study_id', mystudy.delete);
 function removeStudyFromMyStudy(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-removeStudyFromMyStudy');
     let user_id = req.params.user_id;
     let study_id = req.params.study_id;

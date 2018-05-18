@@ -8,19 +8,20 @@ function connect(done) {
     done();
 }
 
-function executeByRaw(query, callback) {
-    logger.debug('[4]database-executeByRaw');
-    pool.query(query, (err, results, fields)=>{
-        callback(err, results);
-    });
-}
-
-// function executeByRawResolveThen(query, resolve, reject) {
+// function executeByRaw(query, callback) {
 //     logger.debug('[4]database-executeByRaw');
 //     pool.query(query, (err, results, fields)=>{
 //         callback(err, results);
 //     });
 // }
+
+function executeByRawResolveObject(query, param, resolve, reject) {
+    logger.debug('[4]database-executeByRawResolveObject');
+    pool.query(query, (err, results, fields)=>{
+        if(err) reject(err);
+        resolve({list:results, param:param});
+    });
+}
 
 function executeByRawResolveResult(query, resolve, reject) {
     logger.debug('[4]database-executeByRawResolveResult');
@@ -30,15 +31,15 @@ function executeByRawResolveResult(query, resolve, reject) {
     });
 }
 
-function executeByValues(query, values, resolve, reject) {
-    logger.debug('[4]database-executeByValues');
-    pool.query(query, values, (err, results, fields)=>{
-        callback(err, results);
-    });
-}
+// function executeByValues(query, values, resolve, reject) {
+//     logger.debug('[4]database-executeByValues');
+//     pool.query(query, values, (err, results, fields)=>{
+//         callback(err, results);
+//     });
+// }
 
-function executeByValueResolveThen(query, values, resolve, reject) {
-    logger.debug('[4]database-executeByValueResolveThen');
+function executeByValueResolveValue(query, values, resolve, reject) {
+    logger.debug('[4]database-executeByValueResolveValue');
     pool.query(query, values, (err, results, fields)=>{
         if(err) reject(err);
         resolve(values[0]);
@@ -63,10 +64,11 @@ function executeByValuesResolveResult(query, values, resolve, reject) {
 
 module.exports = {
     connect : connect,
-    executeByRaw : executeByRaw,
+    // executeByRaw : executeByRaw,
     // executeByRawResolveThen : executeByRawResolveThen,
+    executeByRawResolveObject : executeByRawResolveObject,
     executeByRawResolveResult : executeByRawResolveResult,
-    executeByValueResolveThen : executeByValueResolveThen,
+    executeByValueResolveValue : executeByValueResolveValue,
     executeByValuesResolveResult : executeByValuesResolveResult,
-    executeByValues : executeByValues
+    // executeByValues : executeByValues
 }

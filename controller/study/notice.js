@@ -6,6 +6,16 @@ let error = require('../../response/error');
 // study_id번 스터디에 공지 생성
 // router.post('/:study_id/notice', notice.create);
 function makeNewNotice(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-makeNewNotice');
     let study_id = req.params.study_id;
     var dataObj = req.body;
@@ -21,6 +31,16 @@ function makeNewNotice(req, res, next) {
 // study_id번 스터디 notice_id 공지 조회
 // router.get('/:study_id/notice/:notice_id', notice.selectSingle);
 function getNoticeInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getNoticeInfo');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
@@ -33,6 +53,16 @@ function getNoticeInfo(req, res, next) {
 // study_id번 스터디 공지 전체 조회
 // router.get('/:study_id/notice', notice.selectAll);
 function getNoticeInfoList(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getNoticeInfoList');
     let study_id = req.params.study_id;
     model.getNoticeInfoList(study_id, (err, data)=>{
@@ -44,6 +74,16 @@ function getNoticeInfoList(req, res, next) {
 // study_id번 스터디 notice_id 공지 업데이트
 // router.put('/:study_id/notice/:notice_id', notice.update);
 function changeNoticeInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-changeNoticeInfo');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;
@@ -59,6 +99,16 @@ function changeNoticeInfo(req, res, next) {
 // study_id번 스터디 notice_id 공지 삭제
 // router.delete('/:study_id/:notice/:notice_id', notice.delete);
 function removeNotice(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-removeNotice');
     let study_id = req.params.study_id;
     let notice_id = req.params.notice_id;

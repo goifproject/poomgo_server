@@ -20,43 +20,71 @@ const study_id = "study_id";
 // 위에 뭔가 써 놨는데 새벽이라 이해가 안 감. 일단 나중에 확인해보도록 하고 일단은 스케줄을 생성하면 자동으로 출석부가 생성되도록 했다.
 // 추후 아마도 스케줄 생성 함수를 반복문으로 돌려가며 생성하는 게 좋지 않을까 싶음
 // 다만 뭐가 되더라도 일단 구현을 해 놓고 바꾸도록 하자
-function makeAtendanceBook(param_study_id, param_schedule_id, callback) {
-    logger.debug('[3]attendanceDao-makeAtendanceBook');
-    // 현재 스터디에 참여하는 인원들
-    let queryMember = `SELECT * FROM ${tablename_member} WHERE ${study_id}=${param_study_id}`;
-    database.executeByRaw(queryMember, (err, data)=>{
-        var memberList = data;
-        if(memberList.length == 0) return callback(null, []);
-        var queryAttendance = `INSERT INTO ${tablename} (${schedule_id}, ${member_id}, ${attendance_type}) VALUES `;
-        for(var i=0; i<memberList.length; i++){
-            queryAttendance += `(${param_schedule_id}, '${memberList[i].member_id}', 0)`
-            if(i != memberList.length-1) queryAttendance += ', '
-        }
-        logger.debug(queryAttendance);
-        database.executeByRaw(queryAttendance, callback);
+function makeAtendanceBook(param_study_id, param_schedule_id, resolveC, rejectC) {
+    getMemberListP(param_study_id).
+    then(makeAtendanceBookP).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
     });
 }
 
-function getAtendanceInfo(param_schedule_id, callback) {
-    logger.debug('[3]attendanceDao-getAtendanceInfo');
-    // TODO 권한에 따라 쿼리하는 내용이 달라짐
-    let query = `SELECT * FROM ${tablename} WHERE ${schedule_id}=${param_schedule_id}`;
-    // 토큰을 통해 사용자 구분값인 아이디를 받아와야 함
+function getMemberListP(param_study_id) {
+    return new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]attendanceDao-makeAtendanceBook');
+        // 현재 스터디에 참여하는 인원들
+        let queryMember = `SELECT * FROM ${tablename_member} WHERE ${study_id}=${param_study_id}`;
+        database.executeByRawResolveObject(queryMember, param_study_id, resolveQuery, rejectQuery);
+    });
+}
+
+function makeAtendanceBookP(data) {
+    return new Promise((resolveQuery, rejectQuery)=>{
+        var memberList = data.list;
+        if(memberList.length == 0) return resolveQuery();
+        var queryAttendance = `INSERT INTO ${tablename} (${schedule_id}, ${member_id}, ${attendance_type}) VALUES `;
+        for(var i=0; i<memberList.length; i++){
+            queryAttendance += `(${data.param}, '${memberList[i].member_id}', 0)`
+            if(i != memberList.length-1) queryAttendance += ', '
+        }
+        logger.debug(queryAttendance);
+        database.executeByRawResolveResult(queryAttendance, resolveQuery, rejectQuery);;
+    });
+}
+
+
+function getAtendanceInfo(param_schedule_id, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]attendanceDao-getAtendanceInfo');
+        // TODO 권한에 따라 쿼리하는 내용이 달라짐
+        let query = `SELECT * FROM ${tablename} WHERE ${schedule_id}=${param_schedule_id}`;
+        // 토큰을 통해 사용자 구분값인 아이디를 받아와야 함
+        
+        // 내거만 보내주는 경우
     
-    // 내거만 보내주는 경우
-
-    // 전체 보내주는 경우
-
-    database.executeByRaw(query, callback);
+        // 전체 보내주는 경우
+    
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
 // 명시적으로 '출석체크'를 누를 경우
-function checkAtendance(param_attendance_id, dataObj, callback) {
-    logger.debug('[3]attendanceDao-checkAtendance');
-    // TODO 원래는 토큰을 통해서 아이디를 받아와야 함
-    let values = [dataObj.attendance_type]; 
-    let query = `UPDATE ${tablename} SET ${attendance_type}=? WHERE ${id}=${param_attendance_id}`;
-    database.executeByValues(query, values, callback);
+function checkAtendance(param_attendance_id, dataObj, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]attendanceDao-checkAtendance');
+        // TODO 원래는 토큰을 통해서 아이디를 받아와야 함
+        let values = [dataObj.attendance_type]; 
+        let query = `UPDATE ${tablename} SET ${attendance_type}=? WHERE ${id}=${param_attendance_id}`;
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
 module.exports = {

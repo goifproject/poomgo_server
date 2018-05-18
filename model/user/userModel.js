@@ -36,7 +36,7 @@ function signupP(dataObj) {
         let query = `INSERT INTO ${tablename} (${id}, ${password}, ${auth}, ${name},${age},${region},${introduction},
                             ${email},${phone},${social_id},${profile_img},${thumbnail},${reg_date}) 
                     VALUES (?,?,?,?,? ,?,?,?,?,? ,?,?,?)`;
-        database.executeByValueResolveThen(query, values, resolve, reject);
+        database.executeByValueResolveValue(query, values, resolve, reject);
     });
 }
 
@@ -52,80 +52,56 @@ function makeNewInterestP(userId) {
     });
 }
 
-
 // getUserInfo
-function getUserInfo(param_user_id, resolve, reject) {
-    logger.debug('[3]userModel-getUserInfo');
-    getUserInfoP(param_user_id).
-    then(resolve).
-    catch((error)=>{
-        reject(error);
-    });
-}
-
-function getUserInfoP(param_user_id) {
-    return new Promise((resolve, reject)=>{
+function getUserInfo(param_user_id, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]userModel-getUserInfo');
         let query = `SELECT * FROM ${tablename} WHERE ${id}='${param_user_id}'`;
-        database.executeByRawResolveResult(query, resolve, reject);
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
     });
 }
 
 
 // getUserInfoList
-function getUserInfoList(resolve, reject) {
-    logger.debug('[3]userModel-getUserInfoList');
-    getUserInfoListP().
-    then(resolve).
-    catch((error)=>{
-        reject(error);
-    });
-}
-
-function getUserInfoListP(param_user_id) {
-    return new Promise((resolve, reject)=>{
+function getUserInfoList(resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]userModel-getUserInfoList');
         let query = `SELECT * FROM ${tablename}`;
-        database.executeByRawResolveResult(query, resolve, reject);
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
     });
 }
 
 
 // changeUserInfo
-function changeUserInfo(param_user_id, dataObj, resolve, reject) {
-    logger.debug('[3]userModel-changeUserInfo');
-    changeUserInfoP(param_user_id, dataObj).
-    then(resolve).
-    catch((error)=>{
-        reject(error);
-    });
-}
-
-function changeUserInfoP(param_user_id, dataObj) {
-    return new Promise((resolve, reject)=>{
-        let values = [dataObj.password, 
-                        dataObj.auth,
-                        dataObj.name,
-                        dataObj.age,
-                        dataObj.region,
-                        dataObj.introduction,
-                        dataObj.email,
-                        dataObj.phone,
-                        dataObj.social_id,
-                        dataObj.profile_img,
+function changeUserInfo(param_user_id, dataObj, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        let values = [dataObj.password, dataObj.auth,
+                        dataObj.name, dataObj.age,
+                        dataObj.region, dataObj.introduction,
+                        dataObj.email, dataObj.phone,
+                        dataObj.social_id, dataObj.profile_img,
                         dataObj.thumbnail];
         let query = `UPDATE ${tablename} SET
-                                ${password}=?, 
-                                ${auth}=?, 
-                                ${name}=?,
-                                ${age}=?,
-                                ${region}=?,
-                                ${introduction}=?,
-                                ${email}=?,
-                                ${phone}=?,
-                                ${social_id}=?,
-                                ${profile_img}=?,
+                                ${password}=?, ${auth}=?, 
+                                ${name}=?, ${age}=?,
+                                ${region}=?, ${introduction}=?,
+                                ${email}=?, ${phone}=?,
+                                ${social_id}=?, ${profile_img}=?,
                                 ${thumbnail}=? 
                     WHERE ${id}='${param_user_id}'`;
-        database.executeByValuesResolveResult(query, values, resolve, reject);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
     });
 }
 

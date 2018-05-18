@@ -6,6 +6,16 @@ let error = require('../../response/error');
 // 스케줄이 없는 출석 여부는 의미가 없기 때문에 출석여부를 검색하려면 스케줄로 검색하려고 했으나, 일단은 따로 검색하게 하고 추후 내부에 배열로 추가시켜 응답할지 생각해 보자
 // router.get('/:study_id/attendance/:schedule_id', attendance.check);
 function getAtendanceInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getAtendanceInfo');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
@@ -17,6 +27,16 @@ function getAtendanceInfo(req, res, next) {
 
 // router.put('/:study_id/attendance/:attendance_id', attendance.check);
 function checkAtendance(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-checkAtendance');
     let study_id = req.params.study_id;
     let attendance_id = req.params.attendance_id;

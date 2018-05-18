@@ -14,44 +14,57 @@ const user_id = "user_id",
       career = "career",
       interest = "interest";
 
-function makeNewUserES(param_user_id, resolve, reject) {
-    logger.debug('[3]exposureModel-makeNewUserES');
-    let values = [param_user_id,0,0,0,0, 0,0,0,0,0, 0];
-    let query = `INSERT INTO ${tablename} (
-                        ${user_id},
-                        ${age},
-                        ${region},
-                        ${introduction},
-                        ${email},
-                        ${phone},
-                        ${social_id},
-                        ${profile_img},
-                        ${thumbnail},
-                        ${career},
-                        ${interest}) 
-                VALUES (?,?,?,?,? ,?,?,?,?,? ,?)`;
-    database.executeByValueResolveThen(query, values, resolve, reject);
+
+function makeNewUserES(param_user_id, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]exposureModel-makeNewUserES');
+        let values = [param_user_id,0,0,0,0, 0,0,0,0,0, 0];
+        let query = `INSERT INTO ${tablename} (
+                            ${user_id},
+                            ${age},
+                            ${region},
+                            ${introduction},
+                            ${email},
+                            ${phone},
+                            ${social_id},
+                            ${profile_img},
+                            ${thumbnail},
+                            ${career},
+                            ${interest}) 
+                    VALUES (?,?,?,?,? ,?,?,?,?,? ,?)`;
+        database.executeByValueResolveValue(query, values, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
-function getUserESInfo(param_user_id, callback) {
-    logger.debug('[3]exposureModel-getUserESInfo');
-    let query = `SELECT * FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
-    database.executeByRaw(query, callback);
+function getUserESInfo(param_user_id, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]exposureModel-getUserESInfo');
+        let query = `SELECT * FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
-function changeUserESInfo(param_user_id, dataObj, callback) {
-    // logger.debug('[3]exposureModel-changeUserESInfo');
-    let values = [dataObj.age,
-                    dataObj.region,
-                    dataObj.introduction,
-                    dataObj.email,
-                    dataObj.phone,
-                    dataObj.social_id,
-                    dataObj.profile_img,
-                    dataObj.thumbnail,
-                    dataObj.career,
-                    dataObj.interest];
-    let query = `UPDATE ${tablename} SET
+function changeUserESInfo(param_user_id, dataObj, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        let values = [dataObj.age,
+            dataObj.region,
+            dataObj.introduction,
+            dataObj.email,
+            dataObj.phone,
+            dataObj.social_id,
+            dataObj.profile_img,
+            dataObj.thumbnail,
+            dataObj.career,
+            dataObj.interest];
+        let query = `UPDATE ${tablename} SET
                             ${age}=?,
                             ${region}=?,
                             ${introduction}=?,
@@ -63,13 +76,24 @@ function changeUserESInfo(param_user_id, dataObj, callback) {
                             ${career}=?,
                             ${interest}=?  
                 WHERE ${user_id}='${param_user_id}'`;
-    database.executeByValues(query, values, callback);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
-function removeES(param_user_id, resolve, reject) {
-    logger.debug('[3]exposureModel-removeES');
-    let query = `DELETE FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
-    database.executeByRawResolveResult(query, resolve, reject);
+function removeES(param_user_id, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]exposureModel-removeES');
+        let query = `DELETE FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
+        database.executeByRawResolveResult(query, resolve, reject);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
 }
 
 module.exports = {

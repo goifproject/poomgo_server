@@ -6,6 +6,16 @@ let error = require('../../response/error');
 // study_id번 스터디에 스케줄 생성
 // router.post('/:study_id/schedule', schedule.create);
 function addNewSchedule(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-addNewSchedule');
     let study_id = req.params.study_id;
     var dataObj = req.body;
@@ -19,6 +29,16 @@ function addNewSchedule(req, res, next) {
 // study_id번 스터디 schedule_id 스케줄 조회
 // router.get('/:study_id/schedule/:schedule_id', schedule.selectSingle);
 function getScheduleInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     // TODO 스케줄 조회시 반드시 권한 파악을 해서 출석 데이터를 같이 보내줄 것인지 결정해야 한다
     logger.debug('[2]controller-getScheduleInfo');
     let study_id = req.params.study_id;
@@ -33,6 +53,16 @@ function getScheduleInfo(req, res, next) {
 // study_id번 스터디 스케줄 전체 조회
 // router.get('/:study_id/schedule', schedule.selectAll);
 function getScheduleInfoList(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     // TODO 스케줄 조회시 반드시 권한 파악을 해서 출석 데이터를 같이 보내줄 것인지 결정해야 한다
     logger.debug('[2]controller-getScheduleInfoList');
     let study_id = req.params.study_id;
@@ -46,6 +76,16 @@ function getScheduleInfoList(req, res, next) {
 // study_id번 스터디 schedule_id 스케줄 업데이트
 // router.put('/:study_id/schedule/:schedule_id', schedule.update);
 function changeScheduleInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-changeScheduleInfo');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;
@@ -59,6 +99,16 @@ function changeScheduleInfo(req, res, next) {
 // study_id번 스터디 schedule_id 스케줄 삭제
 // router.delete('/:study_id/schedule/:schedule_id', schedule.delete);
 function removeSchedule(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-removeSchedule');
     let study_id = req.params.study_id;
     let schedule_id = req.params.schedule_id;

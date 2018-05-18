@@ -6,6 +6,16 @@ let error = require('../../response/error');
 
 // router.post('/:study_id/candidate', candidate.add);
 function addCandidateToStudy(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-addCandidateToStudy');
     let study_id = req.params.study_id;
     var dataObj = req.body;
@@ -17,6 +27,16 @@ function addCandidateToStudy(req, res, next) {
 
 // router.get('/:study_id/candidate', candidate.selectAll);
 function getCandidateList(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getCandidateList');
     let study_id = req.params.study_id;
     model.getCandidateList(study_id, (err, data)=>{
@@ -27,6 +47,16 @@ function getCandidateList(req, res, next) {
 
 // router.put('/:study_id/candidate/:candidate_id', candidate.update);
 function changeCandidateStatus(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-changeCandidateStatus');
     let study_id = req.params.study_id;
     let candidate_id = req.params.candidate_id;
@@ -47,6 +77,16 @@ function changeCandidateStatus(req, res, next) {
 
 // router.delete('/:study_id/candidate/:candidate_id', candidate.delete);
 function removeCandidateFromStudy(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-removeCandidateFromStudy');
     let study_id = req.params.study_id;
     let candidate_id = req.params.candidate_id;

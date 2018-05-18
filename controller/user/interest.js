@@ -12,6 +12,16 @@ function makeNewInterest(user_id, callback) {
 
 // router.get('/:user_id/interest', interest.select);
 function getInterestInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-getInterestInfo');
     // 유저 인증 해야 함
     let user_id = req.params.user_id;
@@ -23,6 +33,16 @@ function getInterestInfo(req, res, next) {
 
 // router.put('/:user_id/interest', interest.update);
 function changeInterestInfo(req, res, next) {
+    new Promise((resolve, reject)=>{
+    
+    }).
+    then((data)=>{
+        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+    }).
+    catch((error)=>{
+        next(error);
+    });
+
     logger.debug('[2]controller-changeInterestInfo');
     let user_id = req.params.user_id;
     var dataObj = req.body;
