@@ -11,7 +11,7 @@ const user_id = "user_id",
       language = "language",
       certificate = "certificate";
 
-function makeNewInterest(param_user_id, callback) {
+function makeNewInterest(param_user_id, resolve, reject) {
     logger.debug('[3]interestModel-makeNewInterest');
     let values = [param_user_id,0,0,0,0,0, 0,0];
     let query = `INSERT INTO ${tablename} (
@@ -24,7 +24,7 @@ function makeNewInterest(param_user_id, callback) {
                         ${language},
                         ${certificate}) 
                 VALUES (?,?,?,?,? ,?,?,?)`;
-    database.executeByValues(query, values, callback);
+    database.executeByValuesResolveResult(query, values, resolve, reject);
 }
 
 function getInterestInfo(param_user_id, callback) {

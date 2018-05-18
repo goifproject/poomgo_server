@@ -3,14 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var logger = require('morgan');
+var morgan = require('morgan');
+var logger = require('../util/logger');
 var routes = require('../routes/routes');
 var fs = require('fs');
 
 module.exports = function(app) {
     // configure middleware
-    app.use(logger('dev', {stream : fs.createWriteStream(__dirname+'/../log/http.log', {'flags' : 'a'})}));
-    app.use(logger(':method :url :date :response-time :status'));
+    app.use(morgan('dev', {stream : fs.createWriteStream(__dirname+'/../log/http.log', {'flags' : 'a'})}));
+    app.use(morgan(':method :url :date :response-time :status'));
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(bodyParser.json());
@@ -28,6 +29,9 @@ module.exports = function(app) {
         res.locals.message = err.message;
         res.locals.error = req.app.get('env') === 'development' ? err : {};
         
+        // keep log
+        logger.error(err.toString());
+
         // render the error page
         // res.status(err.status || 500);
         // res.render('error');

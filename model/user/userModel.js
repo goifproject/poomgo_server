@@ -18,98 +18,139 @@ const id = "id",
       profile_img = "profile_img",
       thumbnail = "thumbnail",
       reg_date = "reg_date";
-
-function signup(dataObj, callback) {
+   
+// signup
+function signup(dataObj, resolveResponse, rejectResponse) {
     logger.debug('[3]userModel-signup');
-    let values = [dataObj.id,
-                    dataObj.password, 
-                    dataObj.auth,
-                    dataObj.name,
-                    dataObj.age,
-                    dataObj.region,
-                    dataObj.introduction,
-                    dataObj.email,
-                    dataObj.phone,
-                    dataObj.social_id,
-                    dataObj.profile_img,
-                    dataObj.thumbnail,
-                    dataObj.reg_date];
-    let query = `INSERT INTO ${tablename} (
-                        ${id}, 
-                        ${password}, 
-                        ${auth}, 
-                        ${name},
-                        ${age},
-                        ${region},
-                        ${introduction},
-                        ${email},
-                        ${phone},
-                        ${social_id},
-                        ${profile_img},
-                        ${thumbnail},
-                        ${reg_date}) 
-                VALUES (?,?,?,?,? ,?,?,?,?,? ,?,?,?)`;
-    database.executeByValues(query, values, (err, data)=>{
-        if(err) return callback(err, data);
-        // 회원가입 하면서 exposure_status 생성해 줘야 함
-        exposure_statusModel.makeNewUserES(dataObj.id, (err, data)=>{ 
-            if(err) return callback(err, data);
-            interestModel.makeNewInterest(dataObj.id, (err, data)=>{
-                callback(err, data) 
-            });
-        });
+    signupP(dataObj).
+    then(makeNewUserESP).
+    then(makeNewInterestP).
+    then(resolveResponse).
+    catch((error)=>{rejectResponse(error)});
+}
+
+function signupP(dataObj) {
+    return new Promise((resolve, reject)=>{
+        let values = [dataObj.id,dataObj.password, dataObj.auth,dataObj.name,dataObj.age,dataObj.region,dataObj.introduction,
+                        dataObj.email,dataObj.phone,dataObj.social_id,dataObj.profile_img,dataObj.thumbnail,dataObj.reg_date];
+        let query = `INSERT INTO ${tablename} (${id}, ${password}, ${auth}, ${name},${age},${region},${introduction},
+                            ${email},${phone},${social_id},${profile_img},${thumbnail},${reg_date}) 
+                    VALUES (?,?,?,?,? ,?,?,?,?,? ,?,?,?)`;
+        database.executeByValueResolveThen(query, values, resolve, reject);
     });
 }
 
-function getUserInfo(param_user_id, callback) {
+function makeNewUserESP(userId) {
+    return new Promise((resolve, reject)=>{
+        exposure_statusModel.makeNewUserES(userId, resolve, reject);
+    });
+}
+
+function makeNewInterestP(userId) {
+    return new Promise((resolve, reject)=>{
+        interestModel.makeNewInterest(userId, resolve, reject);
+    });
+}
+
+
+// getUserInfo
+function getUserInfo(param_user_id, resolve, reject) {
     logger.debug('[3]userModel-getUserInfo');
-    let query = `SELECt * FROM ${tablename} WHERE ${id}='${param_user_id}'`;
-    database.executeByRaw(query, callback);
+    getUserInfoP(param_user_id).
+    then(resolve).
+    catch((error)=>{
+        reject(error);
+    });
 }
 
-function getUserInfoList(callback) {
+function getUserInfoP(param_user_id) {
+    return new Promise((resolve, reject)=>{
+        let query = `SELECT * FROM ${tablename} WHERE ${id}='${param_user_id}'`;
+        database.executeByRawResolveResult(query, resolve, reject);
+    });
+}
+
+
+// getUserInfoList
+function getUserInfoList(resolve, reject) {
     logger.debug('[3]userModel-getUserInfoList');
-    let query = `SELECT * FROM ${tablename}`;
-    database.executeByRaw(query, callback);
+    getUserInfoListP().
+    then(resolve).
+    catch((error)=>{
+        reject(error);
+    });
 }
 
-function changeUserInfo(param_user_id, dataObj, callback) {
+function getUserInfoListP(param_user_id) {
+    return new Promise((resolve, reject)=>{
+        let query = `SELECT * FROM ${tablename}`;
+        database.executeByRawResolveResult(query, resolve, reject);
+    });
+}
+
+
+// changeUserInfo
+function changeUserInfo(param_user_id, dataObj, resolve, reject) {
     logger.debug('[3]userModel-changeUserInfo');
-    let values = [dataObj.password, 
-                    dataObj.auth,
-                    dataObj.name,
-                    dataObj.age,
-                    dataObj.region,
-                    dataObj.introduction,
-                    dataObj.email,
-                    dataObj.phone,
-                    dataObj.social_id,
-                    dataObj.profile_img,
-                    dataObj.thumbnail];
-    let query = `UPDATE ${tablename} SET
-                            ${password}=?, 
-                            ${auth}=?, 
-                            ${name}=?,
-                            ${age}=?,
-                            ${region}=?,
-                            ${introduction}=?,
-                            ${email}=?,
-                            ${phone}=?,
-                            ${social_id}=?,
-                            ${profile_img}=?,
-                            ${thumbnail}=? 
-                WHERE ${id}='${param_user_id}'`;
-    database.executeByValues(query, values, callback);
+    changeUserInfoP(param_user_id, dataObj).
+    then(resolve).
+    catch((error)=>{
+        reject(error);
+    });
 }
 
-function leave(param_user_id, callback) {
+function changeUserInfoP(param_user_id, dataObj) {
+    return new Promise((resolve, reject)=>{
+        let values = [dataObj.password, 
+                        dataObj.auth,
+                        dataObj.name,
+                        dataObj.age,
+                        dataObj.region,
+                        dataObj.introduction,
+                        dataObj.email,
+                        dataObj.phone,
+                        dataObj.social_id,
+                        dataObj.profile_img,
+                        dataObj.thumbnail];
+        let query = `UPDATE ${tablename} SET
+                                ${password}=?, 
+                                ${auth}=?, 
+                                ${name}=?,
+                                ${age}=?,
+                                ${region}=?,
+                                ${introduction}=?,
+                                ${email}=?,
+                                ${phone}=?,
+                                ${social_id}=?,
+                                ${profile_img}=?,
+                                ${thumbnail}=? 
+                    WHERE ${id}='${param_user_id}'`;
+        database.executeByValuesResolveResult(query, values, resolve, reject);
+    });
+}
+
+
+// leave
+function leave(param_user_id, resolve, reject) {
     logger.debug('[3]userModel-leave');
-    exposure_statusModel.removeES(param_user_id, (err, data)=>{
-        let query = `DELETE FROM ${tablename} WHERE ${id}='${param_user_id}'`;
-        database.executeByRaw(query, callback);
-    });   
+    removeESP(param_user_id).
+    then(removeUserP).
+    then(resolve).
+    catch((error)=>{reject(error)})
 }
 
+function removeESP(param_user_id) {
+    return new Promise((resolve, reject)=>{
+        exposure_statusModel.removeES(param_user_id, resolve, reject);
+    });
+}
+
+function removeUserP(param_user_id) {
+    return new Promise((resolve, reject)=>{
+        let query = `DELETE FROM ${tablename} WHERE ${id}='${param_user_id}'`;
+        database.executeByRaw(query, resolve, reject);
+    });
+}
 
 module.exports = {
     signup : signup,

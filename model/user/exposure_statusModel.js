@@ -14,7 +14,7 @@ const user_id = "user_id",
       career = "career",
       interest = "interest";
 
-function makeNewUserES(param_user_id, callback) {
+function makeNewUserES(param_user_id, resolve, reject) {
     logger.debug('[3]exposureModel-makeNewUserES');
     let values = [param_user_id,0,0,0,0, 0,0,0,0,0, 0];
     let query = `INSERT INTO ${tablename} (
@@ -30,7 +30,7 @@ function makeNewUserES(param_user_id, callback) {
                         ${career},
                         ${interest}) 
                 VALUES (?,?,?,?,? ,?,?,?,?,? ,?)`;
-    database.executeByValues(query, values, callback);
+    database.executeByValueResolveThen(query, values, resolve, reject);
 }
 
 function getUserESInfo(param_user_id, callback) {
@@ -66,10 +66,10 @@ function changeUserESInfo(param_user_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function removeES(param_user_id, callback) {
+function removeES(param_user_id, resolve, reject) {
     logger.debug('[3]exposureModel-removeES');
     let query = `DELETE FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
-    database.executeByRaw(query, callback);
+    database.executeByRawResolveResult(query, resolve, reject);
 }
 
 module.exports = {
