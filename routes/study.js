@@ -9,8 +9,8 @@ let member = require('../controller/study/member');
 
 // study - general information
 router.post('/', study.createNewStudy);
-router.get('/', study.getStudyInfo);
-router.get('/:study_id', study.getStudyInfoList);
+router.get('/:study_id', study.getStudyInfo);
+router.get('/', study.getStudyInfoList);
 router.put('/:study_id', study.changeStudyInfo);
 router.delete('/:study_id', study.closeStudy);
 
@@ -39,8 +39,7 @@ router.put('/:study_id/candidate/:candidate_id', candidate.changeCandidateStatus
 router.delete('/:study_id/candidate/:candidate_id', candidate.removeCandidateFromStudy);
 
 // study - member list
-router.get('/:study_id/members', member.getMemberList);
+router.get('/:study_id/member', member.getMemberList);
 router.delete('/:study_id/members/:member_id', member.removeMemberFromStudy);
-
 
 module.exports = router;

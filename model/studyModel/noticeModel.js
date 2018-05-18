@@ -54,6 +54,6 @@ module.exports = {
     makeNewNotice : makeNewNotice,
     getNoticeInfo : getNoticeInfo,
     getNoticeInfoList : getNoticeInfoList,
-    updachangeNoticeInfoe : changeNoticeInfo,
+    changeNoticeInfo : changeNoticeInfo,
     removeNotice : removeNotice
 }

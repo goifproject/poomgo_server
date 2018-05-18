@@ -30,18 +30,17 @@ function makeNewUserES(param_user_id, callback) {
                         ${career},
                         ${interest}) 
                 VALUES (?,?,?,?,? ,?,?,?,?,? ,?)`;
-    logger.debug(query);
     database.executeByValues(query, values, callback);
 }
 
 function getUserESInfo(param_user_id, callback) {
     logger.debug('[3]exposureModel-getUserESInfo');
-    let query = `SELECt * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
+    let query = `SELECT * FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
     database.executeByRaw(query, callback);
 }
 
 function changeUserESInfo(param_user_id, dataObj, callback) {
-    logger.debug('[3]exposureModel-changeUserESInfo');
+    // logger.debug('[3]exposureModel-changeUserESInfo');
     let values = [dataObj.age,
                     dataObj.region,
                     dataObj.introduction,
@@ -63,18 +62,19 @@ function changeUserESInfo(param_user_id, dataObj, callback) {
                             ${thumbnail}=?,
                             ${career}=?,
                             ${interest}=?  
-                WHERE ${user_id}=${param_user_id}`;
-    logger.deleteUser(query);
+                WHERE ${user_id}='${param_user_id}'`;
     database.executeByValues(query, values, callback);
 }
 
-function deleteExposure(param_user_id) {
-
+function removeES(param_user_id, callback) {
+    logger.debug('[3]exposureModel-removeES');
+    let query = `DELETE FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
+    database.executeByRaw(query, callback);
 }
 
 module.exports = {
     makeNewUserES : makeNewUserES,
     getUserESInfo : getUserESInfo,
     changeUserESInfo : changeUserESInfo,
-    deleteExposure : deleteExposure
+    removeES : removeES
 }

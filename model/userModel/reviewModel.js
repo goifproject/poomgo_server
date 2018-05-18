@@ -18,13 +18,12 @@ function writeReview(param_user_id, dataObj, callback) {
                         ${rating},
                         ${comment})  
                 VALUES (?,?,?,?,?)`;
-    logger.debug(query);
     database.executeByValues(query, values, callback);
 }
 
 function readReview(param_user_id, callback) {
     logger.debug('[3]reviewModel-readReview');
-    let query = `SELECT * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
+    let query = `SELECT * FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
     database.executeByRaw(query, callback);
 }
 
@@ -34,15 +33,14 @@ function updateReview(param_user_id, param_writer_id, dataObj, callback) {
     let query = `UPDATE ${tablename} SET
                             ${rating}=?, 
                             ${comment}=? 
-                WHERE ${user_id}=${param_user_id} AND ${study_id}=${param_writer_id};`;
-    logger.debug(query);
+                WHERE ${user_id}='${param_user_id}' AND ${writer_id}='${param_writer_id}'`;
     database.executeByValues(query, values, callback);
 }
 
 function removeReview(param_user_id, param_writer_id, callback) {
     logger.debug('[3]reviewModel-removeReview');
     let query = `DELETE FROM ${tablename} 
-                WHERE ${user_id}=${param_user_id} AND ${study_id}=${param_writer_id}`;
+                WHERE ${user_id}='${param_user_id}' AND ${writer_id}='${param_writer_id}'`;
     database.executeByRaw(query, callback);
 }
 

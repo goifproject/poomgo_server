@@ -46,20 +46,20 @@ function createNewStudy(dataObj, callback) {
                     ${status}, 
                     ${thumbnail}) 
                 VALUES (?,?,?,?,?, ?,?,?,?,?, ?,?)`;
-    logger.debug(`[3]query-${query}`);
+    // logger.debug(`[3]query-${query}`);
     database.executeByValues(query, values, callback);
 }
 
 function getStudyInfo(param_study_id, callback) {
     logger.debug('[3]studyModel-getStudyInfo');
     let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_study_id}`;
-    logger.debug(`[3]query-${query}`);
+    // logger.debug(`[3]query-${query}`);
     database.executeByRaw(query, callback);
 }
 
 function getStudyInfoList(callback) {
     logger.debug('[3]studyModel-getStudyInfoList');
-    let query = `SELECT * FROM ${tablename}`;
+    // let query = `SELECT * FROM ${tablename}`;
     database.executeByRaw(query, callback);
 }
 

@@ -24,13 +24,12 @@ function makeNewInterest(param_user_id, callback) {
                         ${language},
                         ${certificate}) 
                 VALUES (?,?,?,?,? ,?,?,?)`;
-    logger.debug(query);
     database.executeByValues(query, values, callback);
 }
 
 function getInterestInfo(param_user_id, callback) {
     logger.debug('[3]interestModel-getInterestInfo');
-    let query = `SELECt * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
+    let query = `SELECt * FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
     database.executeByRaw(query, callback);
 }
 
@@ -51,7 +50,7 @@ function changeInterestInfo(param_user_id, dataObj, callback) {
                             ${public_company}=?,
                             ${language}=?,
                             ${certificate}=?   
-                WHERE ${user_id}=${param_user_id}`;
+                WHERE ${user_id}='${param_user_id}'`;
     logger.debug(query);
     database.executeByValues(query, values, callback);
 }

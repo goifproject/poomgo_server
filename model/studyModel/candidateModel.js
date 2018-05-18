@@ -32,7 +32,7 @@ function changeCandidateStatus(param_candidate_id, param_study_id, dataObj, call
     logger.debug('[3]candidateModel-changeCandidateStatus');
     let candidateStatus = dataObj.status;
     let values = [candidateStatus];
-    let query = `UPDATE ${tablename} SET ${status}=? WHERE ${candidate_id}='${param_candidate_id}'`;
+    let query = `UPDATE ${tablename} SET ${status}=? WHERE ${candidate_id}='${param_candidate_id}' AND ${study_id}=${param_study_id}`;
     database.executeByValues(query, values, (err, data)=>{
         if(dataObj.status == 2) {
             memberModel.addMemberToStudy(param_candidate_id, param_study_id, (err, data)=>{ callback(err, data) });
@@ -42,9 +42,9 @@ function changeCandidateStatus(param_candidate_id, param_study_id, dataObj, call
     });
 }
 
-function removeCandidateFromStudy(param_candidate_id, callback) {
+function removeCandidateFromStudy(param_candidate_id, param_study_id, callback) {
     logger.debug('[3]candidateModel-removeCandidateFromStudy');
-    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_candidate_id}`;
+    let query = `DELETE FROM ${tablename} WHERE ${candidate_id}=${param_candidate_id} AND ${study_id}=${param_study_id}`;
     database.executeByRaw(query, callback);
 }
 

@@ -31,7 +31,7 @@ function removeUserFromBlackList(req, res) {
     let user_id = req.params.user_id;
     let black_id = req.params.black_id;
     var dataObj = req.body;
-    model.removeUserFromBlackList(black_id, dataObj, (err, data)=>{
+    model.removeUserFromBlackList(user_id, black_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${user_id} 블랙리스트 업데이트가 완료되었습니다`, {}, res);
     });

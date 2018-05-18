@@ -22,7 +22,7 @@ function getUserESInfo(req, res) {
 
 // router.put('/:user_id/exposure', exposure_status.update);
 function changeUserESInfo(req, res) {
-    logger.debug('[2]controller-changeUserESInfo');
+    // logger.debug('[2]controller-changeUserESInfo');
     let user_id = req.params.user_id;
     var dataObj = req.body;
     model.changeUserESInfo(user_id, dataObj, (err, data)=>{

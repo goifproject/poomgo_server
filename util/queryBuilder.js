@@ -1,9 +1,9 @@
-exports.build = function(data, columnId) {
+exports.build = function(data, key, columnId) {
     var queryString;
-    for(var i=0; i<blacklist.length; i++){
-        quertString += blacklist[i].black_id;
-        if(i != blacklist.length-1) {
-            quertString += ` or ${columnId}=`
+    for(var i=0; i<data.length; i++){
+        queryString += data[i].key;
+        if(i != data.length-1) {
+            queryString += ` or ${columnId}=`
         }
     }
     return queryString;

@@ -4,7 +4,7 @@ let logger = require('../util/logger');
 let pool;
 
 function connect(done) {
-    pool = mysql.createPool(config.database_options);
+    pool = mysql.createPool(config.local_database_options);
     done();
 }
 

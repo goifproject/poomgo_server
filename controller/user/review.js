@@ -54,7 +54,7 @@ function removeReview(req, res) {
     logger.debug('[2]controller-removeReview');
     let user_id = req.params.user_id;
     let writer_id = req.params.writer_id;
-    model.removeReview(user_id, writer_id, dataObj, (err, data)=>{
+    model.removeReview(user_id, writer_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${writer_id}회원이 작성한 ${user_id}의 리뷰 삭제가 완료되었습니다`, {}, res);
     });

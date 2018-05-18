@@ -11,17 +11,17 @@ function getAtendanceInfo(req, res) {
     let schedule_id = req.params.schedule_id;
     model.getAtendanceInfo(schedule_id, (err, data)=>{
         if(err) return error.send(500, err, res);
-        result.send(200, `${study_id}번 스터디 출석조회가 완료되었습니다`, data, res);
+        result.send(200, `${study_id}번 스터디 ${schedule_id}출석조회가 완료되었습니다`, data, res);
     });
 }
- 
+
 // router.put('/:study_id/attendance/:attendance_id', attendance.check);
 function checkAtendance(req, res) {
     logger.debug('[2]controller-checkAtendance');
     let study_id = req.params.study_id;
     let attendance_id = req.params.attendance_id;
     var dataObj = req.body;
-    model.update(attendance_id, dataObj, (err, data)=>{
+    model.checkAtendance(attendance_id, dataObj, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${attendance_id} 출석 상태 변경이 완료되었습니다`, {}, res);
     });

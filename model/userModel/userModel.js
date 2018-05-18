@@ -1,5 +1,7 @@
 let database = require('../../database/database');
-let exposure = require('../../controller/user/exposure_status');
+let exposure_statusModel = require('../../model/userModel/exposure_statusModel');
+let interestModel = require('../../model/userModel/interestModel');
+
 let tablename = 'user'
 let logger = require('../../util/logger');
 
@@ -47,16 +49,20 @@ function signup(dataObj, callback) {
                         ${thumbnail},
                         ${reg_date}) 
                 VALUES (?,?,?,?,? ,?,?,?,?,? ,?,?,?)`;
-    logger.debug(query);
     database.executeByValues(query, values, (err, data)=>{
         // 회원가입 하면서 exposure_status 생성해 줘야 함
-        exposure.createExposureStatus(dataObj.id, (err, data)=>{ callback(err, data) });
+        exposure_statusModel.makeNewUserES(dataObj.id, (err, data)=>{ 
+            if(err) return callback(err, data);
+            interestModel.makeNewInterest(dataObj.id, (err, data)=>{
+                callback(err, data) 
+            });
+        });
     });
 }
 
 function getUserInfo(param_user_id, callback) {
     logger.debug('[3]userModel-getUserInfo');
-    let query = `SELECt * FROM ${tablename} WHERE ${id}=${param_user_id}`;
+    let query = `SELECt * FROM ${tablename} WHERE ${id}='${param_user_id}'`;
     database.executeByRaw(query, callback);
 }
 
@@ -68,8 +74,7 @@ function getUserInfoList(callback) {
 
 function changeUserInfo(param_user_id, dataObj, callback) {
     logger.debug('[3]userModel-changeUserInfo');
-    let values = [dataObj.id,
-                    dataObj.password, 
+    let values = [dataObj.password, 
                     dataObj.auth,
                     dataObj.name,
                     dataObj.age,
@@ -79,10 +84,8 @@ function changeUserInfo(param_user_id, dataObj, callback) {
                     dataObj.phone,
                     dataObj.social_id,
                     dataObj.profile_img,
-                    dataObj.thumbnail,
-                    dataObj.reg_date];
+                    dataObj.thumbnail];
     let query = `UPDATE ${tablename} SET
-                            ${id}=?, 
                             ${password}=?, 
                             ${auth}=?, 
                             ${name}=?,
@@ -93,17 +96,17 @@ function changeUserInfo(param_user_id, dataObj, callback) {
                             ${phone}=?,
                             ${social_id}=?,
                             ${profile_img}=?,
-                            ${thumbnail}=?,
-                            ${reg_date}=? 
-                WHERE ${id}=${param_user_id}`;
-    logger.deleteUser(query);
+                            ${thumbnail}=? 
+                WHERE ${id}='${param_user_id}'`;
     database.executeByValues(query, values, callback);
 }
 
 function leave(param_user_id, callback) {
     logger.debug('[3]userModel-leave');
-    let query = `DELETE FROM ${tablename} WHERE ${id}=${param_user_id}`;
-    database.executeByRaw(query, callback);
+    exposure_statusModel.removeES(param_user_id, (err, data)=>{
+        let query = `DELETE FROM ${tablename} WHERE ${id}='${param_user_id}'`;
+        database.executeByRaw(query, callback);
+    });   
 }
 
 

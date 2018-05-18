@@ -50,7 +50,7 @@ function removeCandidateFromStudy(req, res) {
     logger.debug('[2]controller-removeCandidateFromStudy');
     let study_id = req.params.study_id;
     let candidate_id = req.params.candidate_id;
-    model.removeCandidateFromStudy(candidate_id, (err, data)=>{
+    model.removeCandidateFromStudy(candidate_id, study_id, (err, data)=>{
         if(err) return error.send(500, err, res);
         result.send(200, `${study_id}번 스터디 ${candidate_id}후보 삭제가 완료되었습니다`, data, res);
     });
