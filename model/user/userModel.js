@@ -1,6 +1,6 @@
 let database = require('../../database/database');
-let exposure_statusModel = require('../../model/userModel/exposure_statusModel');
-let interestModel = require('../../model/userModel/interestModel');
+let exposure_statusModel = require('../../model/user/exposure_statusModel');
+let interestModel = require('../../model/user/interestModel');
 
 let tablename = 'user'
 let logger = require('../../util/logger');

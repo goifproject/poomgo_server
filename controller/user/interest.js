@@ -1,4 +1,4 @@
-let model = require('../../model/userModel/interestModel');
+let model = require('../../model/user/interestModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');

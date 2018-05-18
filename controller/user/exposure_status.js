@@ -1,4 +1,4 @@
-let model = require('../../model/userModel/exposure_statusModel');
+let model = require('../../model/user/exposure_statusModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');

@@ -1,4 +1,4 @@
-let model = require('../../model/userModel/blacklistModel');
+let model = require('../../model/user/blacklistModel');
 let logger = require('../../util/logger');
 let result = require('../../response/result');
 let error = require('../../response/error');

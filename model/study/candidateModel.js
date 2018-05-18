@@ -1,5 +1,5 @@
 let database = require('../../database/database');
-let memberModel = require('../../model/studyModel/memberModel');
+let memberModel = require('../../model/study/memberModel');
 let tablename = 'candidate'
 let logger = require('../../util/logger');
 
