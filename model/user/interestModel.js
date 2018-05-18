@@ -55,13 +55,15 @@ function changeInterestInfo(param_user_id, dataObj, callback) {
     database.executeByValues(query, values, callback);
 }
 
-function deleteInterest(param_user_id) {
-
+function removeInterest(param_user_id, resolve, reject) {
+    logger.debug('[3]interestModel-removeInterest');
+    let query = `DELETE FROM ${tablename} WHERE ${user_id}='${param_user_id}'`;
+    database.executeByRawResolveResult(query, resolve, reject);
 }
 
 module.exports = {
     makeNewInterest : makeNewInterest,
     getInterestInfo : getInterestInfo,
     changeInterestInfo : changeInterestInfo,
-    deleteInterest : deleteInterest
+    removeInterest : removeInterest
 }

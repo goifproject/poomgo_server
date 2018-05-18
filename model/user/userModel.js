@@ -134,9 +134,16 @@ function changeUserInfoP(param_user_id, dataObj) {
 function leave(param_user_id, resolve, reject) {
     logger.debug('[3]userModel-leave');
     removeESP(param_user_id).
-    then(removeUserP).
+    then(removeInterestP(param_user_id)).
+    then(removeUserP(param_user_id)).
     then(resolve).
     catch((error)=>{reject(error)})
+}
+
+function removeInterestP(param_user_id) {
+    return new Promise((resolve, reject)=>{
+        interestModel.removeInterest(param_user_id, resolve, reject);
+    });
 }
 
 function removeESP(param_user_id) {
@@ -147,8 +154,9 @@ function removeESP(param_user_id) {
 
 function removeUserP(param_user_id) {
     return new Promise((resolve, reject)=>{
+        logger.debug('[3]userModel-removeUserP');
         let query = `DELETE FROM ${tablename} WHERE ${id}='${param_user_id}'`;
-        database.executeByRaw(query, resolve, reject);
+        database.executeByRawResolveResult(query, resolve, reject);
     });
 }
 

@@ -22,15 +22,15 @@ function executeByRaw(query, callback) {
 //     });
 // }
 
-function executeByRawResolveResult(query, callback) {
-    logger.debug('[4]database-executeByRaw');
+function executeByRawResolveResult(query, resolve, reject) {
+    logger.debug('[4]database-executeByRawResolveResult');
     pool.query(query, (err, results, fields)=>{
         if(err) reject(err);
         resolve(results);
     });
 }
 
-function executeByValues(query, values, callback) {
+function executeByValues(query, values, resolve, reject) {
     logger.debug('[4]database-executeByValues');
     pool.query(query, values, (err, results, fields)=>{
         callback(err, results);
