@@ -15,6 +15,6 @@ exports.send = function(code, err, response){
         error.result.code = 500;
         error.result.msg = "500 Internal Server Error : "+errStr;
     }
-    response.send(JSON.stringify(result));
+    response.send(error);
     logger.error(`[err] ${err}}`);
 }

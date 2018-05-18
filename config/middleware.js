@@ -29,7 +29,13 @@ module.exports = function(app) {
         res.locals.error = req.app.get('env') === 'development' ? err : {};
         
         // render the error page
-        res.status(err.status || 500);
-        res.render('error');
+        // res.status(err.status || 500);
+        // res.render('error');
+        res.send({
+            "error" : {
+                "code": err.status || 500,
+                "msg": err.toString()
+            }
+        })
     });
 }

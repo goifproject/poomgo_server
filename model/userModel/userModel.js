@@ -50,6 +50,7 @@ function signup(dataObj, callback) {
                         ${reg_date}) 
                 VALUES (?,?,?,?,? ,?,?,?,?,? ,?,?,?)`;
     database.executeByValues(query, values, (err, data)=>{
+        if(err) return callback(err, data);
         // 회원가입 하면서 exposure_status 생성해 줘야 함
         exposure_statusModel.makeNewUserES(dataObj.id, (err, data)=>{ 
             if(err) return callback(err, data);

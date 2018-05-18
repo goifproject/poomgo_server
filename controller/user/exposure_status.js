@@ -10,23 +10,23 @@ function makeNewUserES(user_id, callback) {
 }
 
 // router.get('/:user_id/exposure', exposure_status.read);
-function getUserESInfo(req, res) {
+function getUserESInfo(req, res, next) {
     logger.debug('[2]controller-getUserESInfo');
     // 유저 인증 해야 함
     let user_id = req.params.user_id;
     model.getUserESInfo(user_id, (err, data)=>{
-        if(err) return error.send(500, err, res);
+        if(err) return next(err);
         result.send(200, `${user_id} 회원정보 노출정보 조회가 완료되었습니다`, data, res);
     });
 }
 
 // router.put('/:user_id/exposure', exposure_status.update);
-function changeUserESInfo(req, res) {
+function changeUserESInfo(req, re, next) {
     // logger.debug('[2]controller-changeUserESInfo');
     let user_id = req.params.user_id;
     var dataObj = req.body;
     model.changeUserESInfo(user_id, dataObj, (err, data)=>{
-        if(err) return error.send(500, err, res);
+        if(err) return next(err);
         result.send(200, `${user_id} 회원 정보 업데이트가 완료되었습니다`, {}, res);
     });
 }
