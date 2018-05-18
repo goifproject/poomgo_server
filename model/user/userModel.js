@@ -18,7 +18,7 @@ const id = "id",
       profile_img = "profile_img",
       thumbnail = "thumbnail",
       reg_date = "reg_date";
-   
+
 // signup
 function signup(dataObj, resolveResponse, rejectResponse) {
     logger.debug('[3]userModel-signup');
