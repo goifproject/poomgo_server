@@ -1,6 +1,7 @@
 let database = require('../../database/database');
+let querybuilder = require('../../util/queryBuilder');
 let tablename = 'black_user';
-let tablename_user = 'user';
+let userModel = '../../model/';
 let logger = require('../../util/logger');
 
 const user_id = "user_id",
@@ -23,16 +24,8 @@ function getMyBlackList(param_user_id, callback) {
     logger.debug('[3]blacklistDao-getMyBlackList');
     let query = `SELECT * FROM ${tablename} WHERE ${user_id}=${param_user_id}`;
     database.executeByRaw(query, (err, data)=>{
-        var blacklist = data;
-        // 아침에 여기 분리하는 것부터 할 것
-        var queryUser = `SELECT * FROM ${tablename_user} WHERE ${id}=`;
-        for(var i=0; i<blacklist.length; i++){
-            queryUser += blacklist[i].black_id;
-            if(i != blacklist.length-1) {
-                queryUser += ' or id='
-            }
-        }
-        database.executeByRaw(queryUser, callback);
+        let userIdList = querybuilder.build(data, id);
+        userModel.getUserInfo(userIdList, callback);
     });
 }
 
