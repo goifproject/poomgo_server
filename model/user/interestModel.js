@@ -65,7 +65,7 @@ function changeInterestInfo(param_user_id, dataObj, resolveC, rejectC) {
                                 ${certificate}=?   
                     WHERE ${user_id}='${param_user_id}'`;
         logger.debug(query);
-        database.executeByValueResolveResult(query, values, resolveQuery, rejectQuery);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
     }).
     then(resolveC).
     catch((error)=>{
