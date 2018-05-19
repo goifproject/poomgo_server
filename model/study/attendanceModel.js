@@ -21,7 +21,7 @@ const study_id = "study_id";
 // 추후 아마도 스케줄 생성 함수를 반복문으로 돌려가며 생성하는 게 좋지 않을까 싶음
 // 다만 뭐가 되더라도 일단 구현을 해 놓고 바꾸도록 하자
 function makeAtendanceBook(param_study_id, param_schedule_id, resolveC, rejectC) {
-    getMemberListP(param_study_id).
+    getMemberListP({study_id:param_study_id,schedule_id:param_schedule_id}).
     then(makeAtendanceBookP).
     then(resolveC).
     catch((error)=>{
@@ -29,17 +29,18 @@ function makeAtendanceBook(param_study_id, param_schedule_id, resolveC, rejectC)
     });
 }
 
-function getMemberListP(param_study_id) {
+function getMemberListP(data) {
     return new Promise((resolveQuery, rejectQuery)=>{
-        logger.debug('[3]attendanceDao-makeAtendanceBook');
+        logger.debug('[3]attendanceModel-getMemberListP');
         // 현재 스터디에 참여하는 인원들
-        let queryMember = `SELECT * FROM ${tablename_member} WHERE ${study_id}=${param_study_id}`;
-        database.executeByRawResolveObject(queryMember, param_study_id, resolveQuery, rejectQuery);
+        let queryMember = `SELECT * FROM ${tablename_member} WHERE ${study_id}='${data.study_id}'`;
+        database.executeByRawResolveObject(queryMember, data.schedule_id, resolveQuery, rejectQuery);
     });
 }
 
 function makeAtendanceBookP(data) {
     return new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]attendanceModel-makeAtendanceBookP');
         var memberList = data.list;
         if(memberList.length == 0) return resolveQuery();
         var queryAttendance = `INSERT INTO ${tablename} (${schedule_id}, ${member_id}, ${attendance_type}) VALUES `;
@@ -47,7 +48,6 @@ function makeAtendanceBookP(data) {
             queryAttendance += `(${data.param}, '${memberList[i].member_id}', 0)`
             if(i != memberList.length-1) queryAttendance += ', '
         }
-        logger.debug(queryAttendance);
         database.executeByRawResolveResult(queryAttendance, resolveQuery, rejectQuery);;
     });
 }
@@ -55,7 +55,7 @@ function makeAtendanceBookP(data) {
 
 function getAtendanceInfo(param_schedule_id, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
-        logger.debug('[3]attendanceDao-getAtendanceInfo');
+        logger.debug('[3]attendanceModel-getAtendanceInfo');
         // TODO 권한에 따라 쿼리하는 내용이 달라짐
         let query = `SELECT * FROM ${tablename} WHERE ${schedule_id}=${param_schedule_id}`;
         // 토큰을 통해 사용자 구분값인 아이디를 받아와야 함
@@ -75,7 +75,7 @@ function getAtendanceInfo(param_schedule_id, resolveC, rejectC) {
 // 명시적으로 '출석체크'를 누를 경우
 function checkAtendance(param_attendance_id, dataObj, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
-        logger.debug('[3]attendanceDao-checkAtendance');
+        logger.debug('[3]attendanceModel-checkAtendance');
         // TODO 원래는 토큰을 통해서 아이디를 받아와야 함
         let values = [dataObj.attendance_type]; 
         let query = `UPDATE ${tablename} SET ${attendance_type}=? WHERE ${id}=${param_attendance_id}`;

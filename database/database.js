@@ -54,6 +54,14 @@ function executeByValuesResolveResult(query, values, resolve, reject) {
     });
 }
 
+function executeByValuesResolveAttendance(query, values, resolve, reject) {
+    logger.debug('[4]database-executeByValuesResolveResult');
+    pool.query(query, values, (err, results, fields)=>{
+        if(err) reject(err) 
+        resolve({study_id:values[2], insert_id:results.insertId});
+    });
+}
+
 // function setResult(err, results, callback) {
 //     if(err) {
 //         logger.error(new Error(err));
@@ -69,6 +77,7 @@ module.exports = {
     executeByRawResolveObject : executeByRawResolveObject,
     executeByRawResolveResult : executeByRawResolveResult,
     executeByValueResolveValue : executeByValueResolveValue,
-    executeByValuesResolveResult : executeByValuesResolveResult
+    executeByValuesResolveResult : executeByValuesResolveResult,
+    executeByValuesResolveAttendance : executeByValuesResolveAttendance
     // executeByValues : executeByValues
 }
