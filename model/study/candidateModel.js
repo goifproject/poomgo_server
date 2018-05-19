@@ -24,7 +24,7 @@ function getCandidateList(param_study_id, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
         // TODO 권한 설정!
         logger.debug('[3]candidateModel-getCandidateList');
-        let query = `SELECT * FROM ${tablename} WHERE ${study_id} = ${param_study_id}`;
+        let query = `SELECT * FROM ${tablename} WHERE ${study_id}='${param_study_id}'`;
         database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
     }).
     then(resolveC).
@@ -52,7 +52,7 @@ function changeCandidateStatusP(data) {
         logger.debug('[3]candidateModel-changeCandidateStatus');
         let candidateStatus = data.status;
         let values = [candidateStatus];
-        let query = `UPDATE ${tablename} SET ${status}=? WHERE ${candidate_id}='${data.param_candidate_id}' AND ${study_id}=${data.param_study_id}`;
+        let query = `UPDATE ${tablename} SET ${status}=? WHERE ${candidate_id}='${data.param_candidate_id}' AND ${study_id}='${data.param_study_id}'`;
         database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
     });
 }
@@ -69,7 +69,7 @@ function addMemberToStudyP(data) {
 function removeCandidateFromStudy(param_candidate_id, param_study_id, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{  
         logger.debug('[3]candidateModel-removeCandidateFromStudy');
-        let query = `DELETE FROM ${tablename} WHERE ${candidate_id}=${param_candidate_id} AND ${study_id}=${param_study_id}`;
+        let query = `DELETE FROM ${tablename} WHERE ${candidate_id}='${param_candidate_id}' AND ${study_id}='${param_study_id}'`;
         database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
     }).
     then(resolveC).
