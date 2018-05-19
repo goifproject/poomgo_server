@@ -45,7 +45,9 @@ function getBlackUserListP(param_user_id) {
 function getBlackUserInfoListP(data) {
     return new Promise((resolveQuery, rejectQuery)=>{
         let userIdList = querybuilder.build(data, black_id, id);
-        userModel.getUserInfo(userIdList, resolveQuery, rejectQuery);
+        console.log(data);
+        console.log(userIdList);
+        userModel.getUserInfoByList(userIdList, resolveQuery, rejectQuery);
     });
 }
 

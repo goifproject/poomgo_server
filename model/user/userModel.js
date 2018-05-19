@@ -57,6 +57,20 @@ function getUserInfo(param_user_id, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
         logger.debug('[3]userModel-getUserInfo');
         let query = `SELECT * FROM ${tablename} WHERE ${id}='${param_user_id}'`;
+        console.log(query);
+        database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
+    }).
+    then(resolveC).
+    catch((error)=>{
+        rejectC(error);
+    });
+}
+
+function getUserInfoByList(param_query, resolveC, rejectC) {
+    new Promise((resolveQuery, rejectQuery)=>{
+        logger.debug('[3]userModel-getUserInfo');
+        let query = `SELECT * FROM ${tablename} WHERE ${id}=${param_query}`;
+        console.log(query);
         database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
     }).
     then(resolveC).
@@ -139,6 +153,7 @@ function removeUserP(param_user_id) {
 module.exports = {
     signup : signup,
     getUserInfo : getUserInfo,
+    getUserInfoByList : getUserInfoByList,
     getUserInfoList : getUserInfoList,
     changeUserInfo : changeUserInfo,
     leave : leave
