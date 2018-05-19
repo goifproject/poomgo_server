@@ -30,7 +30,7 @@ module.exports = function(app) {
         res.locals.error = req.app.get('env') === 'development' ? err : {};
         
         // keep log
-        logger.error(err.toString());
+        logger.error(err);
 
         // render the error page
         // res.status(err.status || 500);

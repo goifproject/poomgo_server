@@ -6,7 +6,7 @@ let error = require('../../response/error');
 // router.post('/:user_id/review', review.create);
 function writeReview(req, res, next) {
     new Promise((resolve, reject)=>{
-        ogger.debug('[2]controller-writeReview');
+        logger.debug('[2]controller-writeReview');
         let user_id = req.params.user_id;
         var dataObj = req.body;
         model.writeReview(user_id, dataObj, resolve, reject);
@@ -28,7 +28,8 @@ function readReview(req, res, next) {
         model.readReview(user_id, resolve, reject);
     }).
     then((data)=>{
-        result.send(200, `${user_id}회원의 전체 리뷰 조회가 완료되었습니다`, data, res);
+        result.send(200, `${req.params.user_id}회원의 전체 리뷰 조회가 완료되었습니다`, data, res);
+        // result.send(200, `회원의 전체 리뷰 조회가 완료되었습니다`, data, res);
     }).
     catch((error)=>{
         next(error);
@@ -57,7 +58,7 @@ function updateReview(req, res, next) {
         model.updateReview(user_id, writer_id, dataObj, resolve, reject);
     }).
     then((data)=>{
-        result.send(200, `${writer_id}회원이 작성한 ${user_id}의 리뷰 업데이트가 완료되었습니다`, {}, res);
+        result.send(200, `${req.params.writer_id}회원이 작성한 ${req.params.user_id}의 리뷰 업데이트가 완료되었습니다`, {}, res);
     }).
     catch((error)=>{
         next(error);
@@ -73,7 +74,7 @@ function removeReview(req, res, next) {
         model.removeReview(user_id, writer_id, resolve, reject);
     }).
     then((data)=>{
-        result.send(200, `${writer_id}회원이 작성한 ${user_id}의 리뷰 삭제가 완료되었습니다`, {}, res);
+        result.send(200, `${req.params.writer_id}회원이 작성한 ${req.params.user_id}의 리뷰 삭제가 완료되었습니다`, {}, res);
     }).
     catch((error)=>{
         next(error);

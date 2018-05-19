@@ -19,7 +19,7 @@ function writeReview(param_user_id, dataObj, resolveC, rejectC) {
                             ${rating},
                             ${comment})  
                     VALUES (?,?,?,?,?)`;
-        database.executeByValueResolveResult(query, values, resolveQuery, rejectQuery);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
     }).
     then(resolveC).
     catch((error)=>{
@@ -43,11 +43,9 @@ function updateReview(param_user_id, param_writer_id, dataObj, resolveC, rejectC
     new Promise((resolveQuery, rejectQuery)=>{
         logger.debug('[3]reviewModel-updateReview');
         let values = [dataObj.rating, dataObj.comment];
-        let query = `UPDATE ${tablename} SET
-                                ${rating}=?, 
-                                ${comment}=? 
+        let query = `UPDATE ${tablename} SET ${rating}=?, ${comment}=? 
                     WHERE ${user_id}='${param_user_id}' AND ${writer_id}='${param_writer_id}'`;
-        database.executeByValueResolveResult(query, values, resolveQuery, rejectQuery);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
     }).
     then(resolveC).
     catch((error)=>{

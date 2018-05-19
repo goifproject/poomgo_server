@@ -6,15 +6,6 @@ let error = require('../../response/error');
 // 회원가입
 // router.post('/', user.create);
 function signup(req, res, next) {
-    signupP(req, res, next).
-    then(()=>{
-        result.send(200, "회원가입이 완료되었습니다", {}, res)
-    }).catch((error)=>{
-        next(error);
-    });
-}
-
-function signupP(req, res, next) {
     new Promise((resolve, reject)=>{
         logger.debug('[2]controller-signup');
         var dataObj = req.body;
@@ -22,6 +13,11 @@ function signupP(req, res, next) {
         // TODO Datetime 클라이언트랑 협의 필요함
         dataObj.reg_date = new Date();
         model.signup(dataObj, resolve, reject);
+    }).
+    then(()=>{
+        result.send(200, "회원가입이 완료되었습니다", {}, res)
+    }).catch((error)=>{
+        next(error);
     });
 }
 

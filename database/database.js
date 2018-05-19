@@ -69,6 +69,6 @@ module.exports = {
     executeByRawResolveObject : executeByRawResolveObject,
     executeByRawResolveResult : executeByRawResolveResult,
     executeByValueResolveValue : executeByValueResolveValue,
-    executeByValuesResolveResult : executeByValuesResolveResult,
+    executeByValuesResolveResult : executeByValuesResolveResult
     // executeByValues : executeByValues
 }
