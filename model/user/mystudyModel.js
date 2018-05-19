@@ -11,14 +11,9 @@ function addStudyToMyStudy(param_user_id, dataObj, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
         logger.debug('[3]mystudyModel-addStudyToMyStudy');
         let values = [param_user_id, dataObj.study_id, dataObj.auth, dataObj.status];
-        let query = `INSERT INTO ${tablename} (
-                            ${user_id},
-                            ${study_id},
-                            ${auth},
-                            ${status}) 
+        let query = `INSERT INTO ${tablename} (${user_id}, ${study_id}, ${auth}, ${status}) 
                     VALUES (?,?,?,?)`;
-        logger.debug(query);
-        database.executeByValueResolveResult(query, values, resolveQuery, rejectQuery);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
     }).
     then(resolveC).
     catch((error)=>{
@@ -44,7 +39,7 @@ function changeMyStudyInfo(param_user_id, param_study_id, dataObj, resolveC, rej
         let values = [dataObj.status];
         let query = `UPDATE ${tablename} SET ${status}=?    
                     WHERE ${user_id}='${param_user_id}' AND ${study_id}='${param_study_id}'`;
-        database.executeByValueResolveResult(query, values, resolveQuery, rejectQuery);
+        database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
     }).
     then(resolveC).
     catch((error)=>{
