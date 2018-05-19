@@ -7,43 +7,33 @@ let error = require('../../response/error');
 // router.get('/:study_id/attendance/:schedule_id', attendance.check);
 function getAtendanceInfo(req, res, next) {
     new Promise((resolve, reject)=>{
-    
+        logger.debug('[2]controller-getAtendanceInfo');
+        let study_id = req.params.study_id;
+        let schedule_id = req.params.schedule_id;
+        model.getAtendanceInfo(schedule_id, resolve, reject);
     }).
     then((data)=>{
-        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+        result.send(200, `${req.params.study_id}번 스터디 ${req.params.schedule_id}출석조회가 완료되었습니다`, data, res);
     }).
     catch((error)=>{
         next(error);
-    });
-
-    logger.debug('[2]controller-getAtendanceInfo');
-    let study_id = req.params.study_id;
-    let schedule_id = req.params.schedule_id;
-    model.getAtendanceInfo(schedule_id, (err, data)=>{
-        if(err) return next(err);
-        result.send(200, `${study_id}번 스터디 ${schedule_id}출석조회가 완료되었습니다`, data, res);
     });
 }
 
 // router.put('/:study_id/attendance/:attendance_id', attendance.check);
 function checkAtendance(req, res, next) {
     new Promise((resolve, reject)=>{
-    
+        logger.debug('[2]controller-checkAtendance');
+        let study_id = req.params.study_id;
+        let attendance_id = req.params.attendance_id;
+        var dataObj = req.body;
+        model.checkAtendance(attendance_id, dataObj, resolve, reject);
     }).
     then((data)=>{
-        result.send(200, "리뷰 추가 완료되었습니다", {}, res);
+        result.send(200, `${req.params.study_id}번 스터디 ${req.params.attendance_id} 출석 상태 변경이 완료되었습니다`, {}, res);
     }).
     catch((error)=>{
         next(error);
-    });
-
-    logger.debug('[2]controller-checkAtendance');
-    let study_id = req.params.study_id;
-    let attendance_id = req.params.attendance_id;
-    var dataObj = req.body;
-    model.checkAtendance(attendance_id, dataObj, (err, data)=>{
-        if(err) return next(err);
-        result.send(200, `${study_id}번 스터디 ${attendance_id} 출석 상태 변경이 완료되었습니다`, {}, res);
     });
 }
 
