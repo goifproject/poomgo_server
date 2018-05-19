@@ -40,6 +40,6 @@ router.delete('/:study_id/candidate/:candidate_id', candidate.removeCandidateFro
 
 // study - member list
 router.get('/:study_id/member', member.getMemberList);
-router.delete('/:study_id/members/:member_id', member.removeMemberFromStudy);
+router.delete('/:study_id/member/:member_id', member.removeMemberFromStudy);
 
 module.exports = router;

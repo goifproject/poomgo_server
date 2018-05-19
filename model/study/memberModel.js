@@ -24,7 +24,7 @@ function getMemberList(param_study_id, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
         // TODO 권한 설정!
         logger.debug('[3]memberModel-getMemberList');
-        let query = `SELECT * FROM ${tablename} WHERE ${study_id} = ${param_study_id}`;
+        let query = `SELECT * FROM ${tablename} WHERE ${study_id} = '${param_study_id}'`;
         database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
     }).
     then(resolveC).
@@ -38,7 +38,7 @@ function update(param_member_id, resolveC, rejectC) {
         // TODO 상태 바꿔주면서 실제 member에도 추가해 줘야 함
         logger.debug('[3]memberModel-update');
         let values = [dataObj.status]; 
-        let query = `UPDATE ${tablename} SET ${status} = ? WHERE ${id}=${param_member_id}`;
+        let query = `UPDATE ${tablename} SET ${status} = ? WHERE ${id}='${param_member_id}'`;
         database.executeByValuesResolveResult(query, values, resolveQuery, rejectQuery);
     }).
     then(resolveC).
@@ -50,7 +50,8 @@ function update(param_member_id, resolveC, rejectC) {
 function removeMemberFromStudy(param_member_id, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
         logger.debug('[3]memberModel-removeMemberFromStudy');
-        let query = `DELETE FROM ${tablename} WHERE ${member_id}=${param_member_id}`;
+        let query = `DELETE FROM ${tablename} WHERE ${member_id}='${param_member_id}'`;
+        console.log(query);
         database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
     }).
     then(resolveC).
