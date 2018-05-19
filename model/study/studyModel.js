@@ -72,24 +72,22 @@ function changeStudyInfo(param_study_id, dataObj, resolveC, rejectC) {
         logger.debug('[3]studyModel-changeStudyInfo');
         let values = [dataObj.name, 
             dataObj.start_date, 
-            dataObj.duration, 
-            dataObj.end_date, 
+            dataObj.duration,
             dataObj.region,
             dataObj.category, 
             dataObj.description, 
             dataObj.limit, 
-            dataObj.study_status, 
+            dataObj.status, 
             dataObj.thumbnail]; 
         let query = `UPDATE ${tablename} SET
                     ${name} = ?, 
                     ${start_date} = ?, 
-                    ${duration} = ?, 
-                    ${end_date} = ?, 
+                    ${duration} = ?,
                     ${region} = ?, 
                     ${category} = ?, 
                     ${description} = ?, 
                     ${limit} = ?, 
-                    ${study_status} = ?, 
+                    ${status} = ?, 
                     ${thumbnail} = ?
                 WHERE ${id}=${param_study_id}`;
         logger.debug(`[3]query-${query}`);
