@@ -1,18 +1,50 @@
 let model = require('../../model/user/userModel');
 let logger = require('../../util/logger');
+let auth = require('../../util/auth');
 let result = require('../../response/result');
 let error = require('../../response/error');
 
 // 회원가입
 // router.post('/', user.create);
 function signup(req, res, next) {
+    var dataObj = req.body;
     new Promise((resolve, reject)=>{
-        logger.debug('[2]controller-signup');
-        var dataObj = req.body;
-        dataObj.reg_date = new Date();
-        // TODO Datetime 클라이언트랑 협의 필요함
-        dataObj.reg_date = new Date();
-        model.signup(dataObj, resolve, reject);
+        /*
+            var form = {
+                id          : '',
+                password    : '',
+                token       : '',
+                social_type : ''
+            }
+        */
+        // id 존재 여부 검사
+        if(!dataObj.id) {
+            reject(new Error('no id'));
+        }
+
+        // id 유효성 검사
+        if(!isValid(dataObj.id)) {
+
+        }
+
+        // 비밀번호 유효성 검사
+        if(dataObj.password) {
+            
+        }
+
+        // 1. Social Auth
+        if(dataObj.token) {
+            auth.authSocial(dataObj.token, dataObj.social_type, resolve, reject);
+        }
+    }).
+    then((token)=>{
+        new Promise(
+            (resolve, reject) => {
+                // TODO Datetime 클라이언트랑 협의 필요함
+                dataObj.reg_date = new Date();
+                model.signup(dataObj, resolve, reject);
+            }
+        )
     }).
     then(()=>{
         result.send(200, "회원가입이 완료되었습니다", {}, res)
@@ -31,7 +63,11 @@ function getUserInfo(req, res, next) {
         model.getUserInfo(user_id, resolve, reject);
     }).
     then((data)=>{
-        result.send(200, `${req.params.user_id} 회원 정보 조회가 완료되었습니다`, data, res);
+        if(data.length == 0) {
+            result.send(200, `회원 정보가 없습니다`, {}, res);
+        } else {
+            result.send(200, `${req.params.user_id} 회원 정보 조회가 완료되었습니다`, data, res);
+        }
     }).
     catch((error)=>{
         next(error);
@@ -46,11 +82,41 @@ function getUserInfoList(req, res, next) {
         model.getUserInfoList(resolve, reject);
     }).
     then((data)=>{
-        result.send(200, "회원 전체 조회가 완료되었습니다", data, res);
+        if(data.length == 0) {
+            result.send(200, "회원이 없습니다", data, res);
+        } else {
+            result.send(200, "회원 전체 조회가 완료되었습니다", data, res);
+        }
     }).
     catch((error)=>{
         next(error);
     });
+
+    // const p1 = () => {
+    //     return new Promise(
+    //         (resolve, reject) => {
+    //             logger.debug('[2]controller-getUserInfoList');
+    //             model.getUserInfoList(resolve, reject);
+    //         }
+    //     )
+    // }
+
+    // const onResponse = (data) => {
+    //     if(data.length == 0) {
+    //         result.send(200, "회원이 없습니다", data, res);
+    //     } else {
+    //         result.send(200, "회원 전체 조회가 완료되었습니다", data, res);
+    //     }
+    // }
+
+    // const onError = (error) => {
+    //     next(error);
+    // }
+
+    // p1()
+    // .then(onResponse)
+    // .catch(onError)
+
 }
 
 // 회원정보수정

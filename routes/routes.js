@@ -1,4 +1,4 @@
- let signin = require('./signin')
+let signin = require('./signin')
 let user = require('./user');
 let study = require('./study');
 

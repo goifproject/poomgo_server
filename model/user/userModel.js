@@ -57,7 +57,6 @@ function getUserInfo(param_user_id, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
         logger.debug('[3]userModel-getUserInfo');
         let query = `SELECT * FROM ${tablename} WHERE ${id}='${param_user_id}'`;
-        console.log(query);
         database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
     }).
     then(resolveC).
@@ -70,7 +69,6 @@ function getUserInfoByList(param_query, resolveC, rejectC) {
     new Promise((resolveQuery, rejectQuery)=>{
         logger.debug('[3]userModel-getUserInfo');
         let query = `SELECT * FROM ${tablename} WHERE ${id}=${param_query}`;
-        console.log(query);
         database.executeByRawResolveResult(query, resolveQuery, rejectQuery);
     }).
     then(resolveC).
